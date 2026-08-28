@@ -1,0 +1,842 @@
+{
+  "meta": {
+    "version": 1,
+    "description": "Base recettes Au Menu. qteParPortion dans l'unité de l'ingrédient (kg, L ou pièce). famille : végé, volaille, bœuf, porc, poisson. etapes à rédiger ultérieurement.",
+    "familles": [
+      "végé",
+      "volaille",
+      "bœuf",
+      "porc",
+      "poisson"
+    ],
+    "tags": [
+      "rapide",
+      "enfants",
+      "batch"
+    ]
+  },
+  "recettes": [
+    {
+      "id": 1,
+      "nom": "Spaghetti bolognaise",
+      "famille": "bœuf",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "spaghetti",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "boeuf-hache",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "parmesan",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nom": "Poulet rôti, pommes de terre",
+      "famille": "volaille",
+      "tempsMinutes": 60,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "cuisses-poulet",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "ail",
+          "qteParPortion": 0.01
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nom": "Curry de pois chiches coco",
+      "famille": "végé",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "pois-chiches",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "lait-coco",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "epinards",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nom": "Omelette champignons, salade",
+      "famille": "végé",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 3
+        },
+        {
+          "ingredientId": "champignons",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nom": "Quiche lorraine, salade",
+      "famille": "porc",
+      "tempsMinutes": 45,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "pate-brisee",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "lardons",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.25
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nom": "Saumon rôti, riz & brocoli",
+      "famille": "poisson",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "pave-saumon",
+          "qteParPortion": 0.14
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "brocoli",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "citron",
+          "qteParPortion": 0.25
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "nom": "Chili con carne",
+      "famille": "bœuf",
+      "tempsMinutes": 40,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "boeuf-hache",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "haricots-rouges",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "poivrons",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "nom": "Gratin de courgettes au chèvre",
+      "famille": "végé",
+      "tempsMinutes": 40,
+      "saisons": [
+        "été"
+      ],
+      "tags": [],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "courgettes",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "chevre",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.07
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "nom": "Escalope de poulet à la crème",
+      "famille": "volaille",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "tagliatelles",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.07
+        },
+        {
+          "ingredientId": "champignons",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "nom": "Côtes de porc, purée maison",
+      "famille": "porc",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "cotes-porc",
+          "qteParPortion": 0.18
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.015
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "nom": "Dahl de lentilles corail",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "lentilles-corail",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "lait-coco",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.07
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "nom": "Cabillaud pané, haricots verts",
+      "famille": "poisson",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "dos-cabillaud",
+          "qteParPortion": 0.14
+        },
+        {
+          "ingredientId": "chapelure",
+          "qteParPortion": 0.02
+        },
+        {
+          "ingredientId": "haricots-verts",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "citron",
+          "qteParPortion": 0.25
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "nom": "Risotto aux champignons",
+      "famille": "végé",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "riz-arborio",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "champignons",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "parmesan",
+          "qteParPortion": 0.02
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.015
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "nom": "Wraps de poulet croustillant",
+      "famille": "volaille",
+      "tempsMinutes": 20,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.13
+        },
+        {
+          "ingredientId": "tortillas",
+          "qteParPortion": 1.5
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "tomates",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "nom": "Steak haché, haricots verts",
+      "famille": "bœuf",
+      "tempsMinutes": 20,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "steaks-haches",
+          "qteParPortion": 0.125
+        },
+        {
+          "ingredientId": "haricots-verts",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.2
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "nom": "Pâtes à la carbonara",
+      "famille": "porc",
+      "tempsMinutes": 20,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "spaghetti",
+          "qteParPortion": 0.11
+        },
+        {
+          "ingredientId": "lardons",
+          "qteParPortion": 0.07
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "parmesan",
+          "qteParPortion": 0.015
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "nom": "Ratatouille & riz",
+      "famille": "végé",
+      "tempsMinutes": 45,
+      "saisons": [
+        "été"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "courgettes",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "aubergines",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "poivrons",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "tomates",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "nom": "Pâtes au thon et tomates",
+      "famille": "poisson",
+      "tempsMinutes": 20,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "penne",
+          "qteParPortion": 0.11
+        },
+        {
+          "ingredientId": "thon-conserve",
+          "qteParPortion": 0.07
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "olives-noires",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "nom": "Hachis parmentier",
+      "famille": "bœuf",
+      "tempsMinutes": 50,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "boeuf-hache",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.025
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "nom": "Soupe de légumes, croque-monsieur",
+      "famille": "porc",
+      "tempsMinutes": 30,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "poireaux",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "pain-de-mie",
+          "qteParPortion": 4
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "nom": "Buddha bowl pois chiches",
+      "famille": "végé",
+      "tempsMinutes": 25,
+      "saisons": [
+        "été"
+      ],
+      "tags": [],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "pois-chiches",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "semoule",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "avocat",
+          "qteParPortion": 0.5
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "tomates",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "nom": "Saucisses lentilles",
+      "famille": "porc",
+      "tempsMinutes": 40,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "saucisses-fumees",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "lentilles-vertes",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "nom": "Crevettes sautées, riz jasmin",
+      "famille": "poisson",
+      "tempsMinutes": 20,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "crevettes",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "courgettes",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "ail",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "nom": "Tarte tomate-moutarde",
+      "famille": "végé",
+      "tempsMinutes": 35,
+      "saisons": [
+        "été"
+      ],
+      "tags": [],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "pate-feuilletee",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "tomates",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.25
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "nom": "Couscous merguez",
+      "famille": "porc",
+      "tempsMinutes": 40,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch",
+        "enfants"
+      ],
+      "etapes": [],
+      "ingredients": [
+        {
+          "ingredientId": "merguez",
+          "qteParPortion": 0.13
+        },
+        {
+          "ingredientId": "semoule",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "pois-chiches",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "courgettes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        }
+      ]
+    }
+  ]
+}
