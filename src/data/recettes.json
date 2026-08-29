@@ -27,7 +27,14 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer l'oignon.",
+        "Le faire revenir 3 min dans un filet d'huile.",
+        "Ajouter le bœuf haché et cuire 5 min en l'émiettant.",
+        "Verser les tomates concassées, saler, poivrer, laisser mijoter 15 min.",
+        "Pendant ce temps, cuire les spaghetti 8 min dans l'eau bouillante salée.",
+        "Servir les pâtes nappées de sauce, avec le parmesan."
+      ],
       "ingredients": [
         {
           "ingredientId": "spaghetti",
@@ -62,7 +69,13 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Couper les pommes de terre en quartiers, sans les éplucher.",
+        "Dans un plat, disposer le poulet et les pommes de terre, ajouter l'ail écrasé, le beurre en morceaux, sel et poivre.",
+        "Enfourner 50 min, en retournant les pommes de terre à mi-cuisson.",
+        "Vérifier que le jus du poulet est clair avant de servir."
+      ],
       "ingredients": [
         {
           "ingredientId": "cuisses-poulet",
@@ -93,7 +106,14 @@
       "tags": [
         "batch"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer l'oignon et le faire revenir 3 min.",
+        "Ajouter une cuillère de curry et les pois chiches égouttés, mélanger 1 min.",
+        "Verser le lait de coco et laisser mijoter 10 min.",
+        "Ajouter les épinards et poursuivre 2 min.",
+        "Pendant ce temps, cuire le riz 11 min.",
+        "Servir le curry sur le riz."
+      ],
       "ingredients": [
         {
           "ingredientId": "pois-chiches",
@@ -128,7 +148,13 @@
       "tags": [
         "rapide"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer les champignons, les poêler 5 min à feu vif.",
+        "Battre les œufs avec sel et poivre.",
+        "Verser les œufs sur les champignons, cuire 3 min à feu moyen.",
+        "Parsemer d'emmental, plier l'omelette.",
+        "Servir avec la salade assaisonnée."
+      ],
       "ingredients": [
         {
           "ingredientId": "oeufs",
@@ -159,7 +185,14 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Préchauffer le four à 180 °C.",
+        "Foncer un moule avec la pâte brisée, piquer le fond.",
+        "Faire dorer les lardons 3 min à sec.",
+        "Battre les œufs avec la crème, poivrer, ajouter les lardons.",
+        "Verser sur la pâte et enfourner 35 min.",
+        "Servir tiède avec la salade."
+      ],
       "ingredients": [
         {
           "ingredientId": "pate-brisee",
@@ -192,7 +225,13 @@
         "toutes"
       ],
       "tags": [],
-      "etapes": [],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Poser les pavés de saumon dans un plat, arroser de jus de citron, saler.",
+        "Enfourner 15 min.",
+        "Pendant ce temps, cuire le riz 11 min et le brocoli 8 min à la vapeur.",
+        "Servir le tout avec un quartier de citron."
+      ],
       "ingredients": [
         {
           "ingredientId": "pave-saumon",
@@ -224,7 +263,13 @@
         "batch",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer l'oignon et le poivron, les faire revenir 4 min.",
+        "Ajouter le bœuf haché, cuire 5 min en émiettant.",
+        "Ajouter cumin et paprika, puis tomates et haricots rouges égouttés.",
+        "Laisser mijoter 20 min à feu doux.",
+        "Cuire le riz 11 min et servir."
+      ],
       "ingredients": [
         {
           "ingredientId": "boeuf-hache",
@@ -257,7 +302,13 @@
         "été"
       ],
       "tags": [],
-      "etapes": [],
+      "etapes": [
+        "Préchauffer le four à 190 °C.",
+        "Couper les courgettes en rondelles, les précuire 5 min à la poêle.",
+        "Mélanger la crème et le chèvre émietté, poivrer.",
+        "Dans un plat, mêler courgettes, riz cuit et crème au chèvre.",
+        "Enfourner 25 min jusqu'à ce que le dessus dore."
+      ],
       "ingredients": [
         {
           "ingredientId": "courgettes",
@@ -288,7 +339,13 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer les champignons, les poêler 5 min ; réserver.",
+        "Cuire les escalopes 4 min de chaque côté ; saler.",
+        "Remettre les champignons, verser la crème, laisser mijoter 5 min à feu doux.",
+        "Pendant ce temps, cuire les tagliatelles 8 min.",
+        "Servir les escalopes nappées de sauce sur les pâtes."
+      ],
       "ingredients": [
         {
           "ingredientId": "filet-poulet",
@@ -319,7 +376,13 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Éplucher les pommes de terre, les cuire 20 min à l'eau bouillante salée.",
+        "Les écraser avec le beurre et le lait chaud ; saler.",
+        "Cuire les côtes de porc 5 min de chaque côté à la poêle.",
+        "Laisser reposer la viande 2 min sous une feuille d'alu.",
+        "Servir avec la purée."
+      ],
       "ingredients": [
         {
           "ingredientId": "cotes-porc",
@@ -350,7 +413,13 @@
       "tags": [
         "batch"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer l'oignon, tailler les carottes en dés, faire revenir 4 min.",
+        "Ajouter les lentilles corail, le lait de coco et un verre d'eau.",
+        "Laisser mijoter 15 min en remuant de temps en temps.",
+        "Cuire le riz 11 min.",
+        "Rectifier l'assaisonnement (curry, sel) et servir sur le riz."
+      ],
       "ingredients": [
         {
           "ingredientId": "lentilles-corail",
@@ -385,7 +454,12 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Humecter les dos de cabillaud, les rouler dans la chapelure salée.",
+        "Cuire les haricots verts 8 min à la vapeur ou à l'eau.",
+        "Poêler le poisson 4 min de chaque côté dans un filet d'huile.",
+        "Servir avec les haricots et un quartier de citron."
+      ],
       "ingredients": [
         {
           "ingredientId": "dos-cabillaud",
@@ -414,7 +488,14 @@
         "toutes"
       ],
       "tags": [],
-      "etapes": [],
+      "etapes": [
+        "Porter un litre d'eau ou de bouillon à frémissement.",
+        "Émincer l'oignon, le faire revenir 3 min dans le beurre.",
+        "Ajouter le riz, remuer 2 min jusqu'à ce qu'il soit nacré.",
+        "Ajouter le bouillon louche par louche pendant 18 min, en remuant.",
+        "Poêler les champignons à part 5 min.",
+        "Hors du feu, incorporer parmesan et champignons. Servir aussitôt."
+      ],
       "ingredients": [
         {
           "ingredientId": "riz-arborio",
@@ -450,7 +531,12 @@
         "rapide",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Tailler le poulet en lanières, les poêler 6 min ; saler, pimenter selon goût.",
+        "Tiédir les tortillas 1 min à la poêle.",
+        "Garnir chaque tortilla de salade, tomates, poulet et emmental.",
+        "Rouler serré et couper en deux."
+      ],
       "ingredients": [
         {
           "ingredientId": "filet-poulet",
@@ -486,7 +572,12 @@
         "rapide",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Cuire les pommes de terre en quartiers 15 min à l'eau salée.",
+        "Cuire les haricots verts 8 min.",
+        "Poêler les steaks 3 min de chaque côté selon la cuisson voulue.",
+        "Servir le tout, avec une noix de beurre sur les légumes si vous aimez."
+      ],
       "ingredients": [
         {
           "ingredientId": "steaks-haches",
@@ -514,7 +605,13 @@
         "rapide",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Cuire les spaghetti 8 min ; garder une louche d'eau de cuisson.",
+        "Faire dorer les lardons 4 min à sec.",
+        "Battre les œufs avec le parmesan et beaucoup de poivre.",
+        "Hors du feu, mélanger pâtes, lardons et œufs battus, en détendant avec l'eau de cuisson.",
+        "Servir immédiatement."
+      ],
       "ingredients": [
         {
           "ingredientId": "spaghetti",
@@ -545,7 +642,13 @@
       "tags": [
         "batch"
       ],
-      "etapes": [],
+      "etapes": [
+        "Tailler aubergines, courgettes et poivrons en dés.",
+        "Faire revenir les aubergines 5 min dans l'huile d'olive.",
+        "Ajouter courgettes et poivrons, poursuivre 5 min.",
+        "Ajouter les tomates en dés, sel, thym ; laisser mijoter 25 min.",
+        "Cuire le riz 11 min et servir."
+      ],
       "ingredients": [
         {
           "ingredientId": "courgettes",
@@ -581,7 +684,12 @@
         "rapide",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Cuire les penne 9 min.",
+        "Chauffer les tomates concassées 5 min avec un filet d'huile.",
+        "Ajouter le thon égoutté et les olives, réchauffer 2 min.",
+        "Mélanger aux pâtes et servir."
+      ],
       "ingredients": [
         {
           "ingredientId": "penne",
@@ -613,7 +721,12 @@
         "batch",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Cuire les pommes de terre 20 min, les écraser avec le lait ; saler.",
+        "Émincer l'oignon, le faire revenir, ajouter le bœuf et cuire 6 min.",
+        "Dans un plat, étaler la viande puis la purée ; parsemer d'emmental.",
+        "Gratiner 15 min au four à 200 °C."
+      ],
       "ingredients": [
         {
           "ingredientId": "boeuf-hache",
@@ -649,7 +762,12 @@
       "tags": [
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Tailler carottes et poireaux, les cuire 15 min dans l'eau bouillante salée.",
+        "Mixer la soupe ; rectifier l'assaisonnement.",
+        "Monter les croques : pain, jambon, emmental, pain.",
+        "Les dorer 8 min au four à 200 °C et servir avec la soupe."
+      ],
       "ingredients": [
         {
           "ingredientId": "carottes",
@@ -682,7 +800,13 @@
         "été"
       ],
       "tags": [],
-      "etapes": [],
+      "etapes": [
+        "Verser l'eau bouillante sur la semoule, couvrir 5 min, égrainer.",
+        "Râper les carottes, couper les tomates et l'avocat.",
+        "Rincer les pois chiches.",
+        "Dresser les bols : semoule, légumes, pois chiches, avocat.",
+        "Arroser d'un filet d'huile d'olive et de citron."
+      ],
       "ingredients": [
         {
           "ingredientId": "pois-chiches",
@@ -718,7 +842,13 @@
       "tags": [
         "batch"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer l'oignon, tailler les carottes, faire revenir 4 min.",
+        "Ajouter les lentilles, couvrir d'eau à hauteur.",
+        "Laisser mijoter 25 min.",
+        "À mi-cuisson, ajouter les saucisses coupées en tronçons.",
+        "Saler en fin de cuisson et servir bien chaud."
+      ],
       "ingredients": [
         {
           "ingredientId": "saucisses-fumees",
@@ -749,7 +879,12 @@
       "tags": [
         "rapide"
       ],
-      "etapes": [],
+      "etapes": [
+        "Cuire le riz 11 min.",
+        "Tailler les courgettes en demi-rondelles, les sauter 5 min à feu vif.",
+        "Ajouter l'ail émincé puis les crevettes, cuire 3 min.",
+        "Servir sur le riz."
+      ],
       "ingredients": [
         {
           "ingredientId": "crevettes",
@@ -778,7 +913,13 @@
         "été"
       ],
       "tags": [],
-      "etapes": [],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Dérouler la pâte, la tartiner de moutarde.",
+        "Disposer les tomates en rondelles, saler, parsemer d'emmental.",
+        "Enfourner 25 min.",
+        "Servir avec la salade."
+      ],
       "ingredients": [
         {
           "ingredientId": "pate-feuilletee",
@@ -810,7 +951,14 @@
         "batch",
         "enfants"
       ],
-      "etapes": [],
+      "etapes": [
+        "Émincer l'oignon, tailler carottes et courgettes en tronçons.",
+        "Faire revenir l'oignon et les carottes 5 min avec du ras-el-hanout.",
+        "Ajouter courgettes et pois chiches, couvrir d'eau, laisser mijoter 15 min.",
+        "Griller les merguez 8 min à la poêle ou au four.",
+        "Verser l'eau bouillante sur la semoule, couvrir 5 min, égrainer.",
+        "Servir semoule, légumes avec leur bouillon et merguez."
+      ],
       "ingredients": [
         {
           "ingredientId": "merguez",
@@ -835,6 +983,959 @@
         {
           "ingredientId": "oignons",
           "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "nom": "Gratin de pâtes au jambon",
+      "famille": "porc",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Cuire les penne 9 min ; préchauffer le four à 200 °C.",
+        "Tailler le jambon en lanières.",
+        "Mélanger pâtes, jambon et lait dans un plat beurré.",
+        "Couvrir d'emmental et enfourner 15 min."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "penne",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "nom": "Riz cantonais express",
+      "famille": "porc",
+      "tempsMinutes": 20,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [
+        "Cuire le riz 11 min ; l'égoutter.",
+        "Battre les œufs, les brouiller 2 min à la poêle ; réserver.",
+        "Sauter petits pois et jambon en dés 3 min.",
+        "Ajouter riz et œufs, faire sauter 2 min à feu vif."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "petits-pois-surgeles",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "nom": "Crêpes salées jambon-fromage",
+      "famille": "porc",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Mélanger farine, œufs et lait en pâte lisse ; laisser reposer 10 min.",
+        "Cuire les crêpes 2 min par face dans une poêle beurrée.",
+        "Garnir chaque crêpe de jambon et d'emmental.",
+        "Plier et repasser 1 min à la poêle pour faire fondre."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "farine",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "nom": "Soupe de potiron, croûtons",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [
+        "Tailler potiron et pommes de terre en cubes.",
+        "Les couvrir d'eau salée et cuire 20 min.",
+        "Mixer avec la crème ; rectifier l'assaisonnement.",
+        "Griller le pain en croûtons et servir dessus."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "potiron",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "pain-de-mie",
+          "qteParPortion": 2
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "nom": "Frittata pommes de terre-oignons",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [],
+      "etapes": [
+        "Cuire les pommes de terre en dés 10 min à l'eau.",
+        "Faire dorer les oignons émincés 5 min.",
+        "Battre les œufs, ajouter pommes de terre, oignons et emmental.",
+        "Cuire 8 min à couvert à feu doux, jusqu'à ce que le dessus prenne."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 2.5
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "nom": "Pâtes aux sardines et citron",
+      "famille": "poisson",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [
+        "Cuire les spaghetti 8 min.",
+        "Émietter les sardines dans une poêle avec l'ail, chauffer 2 min.",
+        "Ajouter le jus de citron et les pâtes, mélanger.",
+        "Poivrer généreusement et servir."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "spaghetti",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "sardines-conserve",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "citron",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "ail",
+          "qteParPortion": 0.008
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "nom": "Riz au thon gratiné",
+      "famille": "poisson",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Cuire le riz 11 min ; préchauffer le four à 200 °C.",
+        "Mélanger riz, thon égoutté et tomates concassées.",
+        "Verser dans un plat, couvrir d'emmental.",
+        "Gratiner 12 min."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "thon-conserve",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.025
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "nom": "Potée de chou aux saucisses",
+      "famille": "porc",
+      "tempsMinutes": 50,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [
+        "Émincer le chou, tailler pommes de terre et carottes.",
+        "Tout mettre dans un faitout, couvrir d'eau salée.",
+        "Laisser mijoter 30 min.",
+        "Ajouter les saucisses en tronçons et poursuivre 15 min."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "chou-vert",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "saucisses-fumees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.1
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "nom": "Galettes de pommes de terre, salade",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Râper les pommes de terre, les presser pour retirer l'eau.",
+        "Mélanger avec l'œuf, la farine, sel et poivre.",
+        "Former des galettes, les dorer 4 min par face.",
+        "Servir avec la salade assaisonnée."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "farine",
+          "qteParPortion": 0.02
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 0.5
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.25
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "nom": "Gratin de brocoli à la béchamel",
+      "famille": "végé",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [],
+      "etapes": [
+        "Cuire le brocoli 8 min à l'eau bouillante salée.",
+        "Préparer la béchamel : beurre, farine, puis lait, en fouettant 5 min.",
+        "Napper le brocoli dans un plat, couvrir d'emmental.",
+        "Gratiner 15 min à 200 °C."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "brocoli",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "farine",
+          "qteParPortion": 0.02
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.015
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.025
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "nom": "Semoule aux légumes du placard",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [
+        "Tailler carottes, courgettes et navets en tronçons.",
+        "Les faire revenir 5 min avec des épices à couscous.",
+        "Ajouter les pois chiches, couvrir d'eau, mijoter 15 min.",
+        "Verser l'eau bouillante sur la semoule, couvrir 5 min, égrainer.",
+        "Servir les légumes et leur bouillon sur la semoule."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "semoule",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "pois-chiches",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "courgettes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "navets",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "nom": "Riz crémeux aux petits pois",
+      "famille": "végé",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Faire revenir l'oignon émincé 3 min dans le beurre.",
+        "Ajouter le riz et le double de son volume d'eau, cuire 11 min.",
+        "Ajouter les petits pois à mi-cuisson.",
+        "Hors du feu, incorporer le parmesan. Servir crémeux."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "petits-pois-surgeles",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "parmesan",
+          "qteParPortion": 0.015
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "nom": "Quesadillas fromage-maïs",
+      "famille": "végé",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [
+        "Garnir la moitié de chaque tortilla d'emmental, maïs et oignon émincé.",
+        "Replier en demi-lune.",
+        "Dorer 3 min par face à la poêle, jusqu'à ce que le fromage fonde.",
+        "Couper en parts et servir."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "tortillas",
+          "qteParPortion": 1.5
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "mais-conserve",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "nom": "Soupe paysanne",
+      "famille": "végé",
+      "tempsMinutes": 35,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [
+        "Tailler navets, carottes, poireaux et pommes de terre.",
+        "Couvrir d'eau salée et cuire 25 min.",
+        "Mixer grossièrement ou laisser en morceaux, au choix.",
+        "Servir avec le pain grillé."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "navets",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "poireaux",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "pain-de-mie",
+          "qteParPortion": 2
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "nom": "Spaghetti tomate-ail",
+      "famille": "végé",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [
+        "Cuire les spaghetti 8 min ; garder une louche d'eau.",
+        "Chauffer les tomates concassées 5 min avec l'ail et un filet d'huile.",
+        "Mélanger pâtes et sauce, détendre avec l'eau de cuisson.",
+        "Servir avec le parmesan."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "spaghetti",
+          "qteParPortion": 0.11
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.13
+        },
+        {
+          "ingredientId": "ail",
+          "qteParPortion": 0.01
+        },
+        {
+          "ingredientId": "parmesan",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "nom": "Salade de lentilles à l'œuf mollet",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [],
+      "etapes": [
+        "Cuire les lentilles 25 min dans l'eau non salée ; égoutter.",
+        "Cuire les œufs 6 min dans l'eau bouillante, les écaler.",
+        "Assaisonner les lentilles : oignon émincé, carotte râpée, vinaigrette.",
+        "Poser l'œuf mollet dessus et servir tiède."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "lentilles-vertes",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.08
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "nom": "Riz sauté au poulet et légumes",
+      "famille": "volaille",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Cuire le riz 11 min.",
+        "Tailler le poulet en dés, le sauter 5 min à feu vif.",
+        "Ajouter petits pois et carottes en petits dés, 4 min.",
+        "Ajouter le riz, sauter 2 min en mélangeant. Assaisonner (sauce soja si vous en avez)."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.11
+        },
+        {
+          "ingredientId": "petits-pois-surgeles",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.06
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "nom": "Cuisses de poulet, navets et carottes rôtis",
+      "famille": "volaille",
+      "tempsMinutes": 55,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Tailler navets et carottes en quartiers.",
+        "Disposer le tout autour des cuisses, ail écrasé, huile, sel.",
+        "Rôtir 45 min en retournant les légumes à mi-cuisson."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cuisses-poulet",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "navets",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "carottes",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "ail",
+          "qteParPortion": 0.008
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "nom": "Poulet basquaise express",
+      "famille": "volaille",
+      "tempsMinutes": 40,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch"
+      ],
+      "etapes": [
+        "Faire dorer les cuisses de poulet 5 min de chaque côté.",
+        "Ajouter oignons et poivrons émincés, 5 min.",
+        "Verser les tomates concassées, couvrir, mijoter 20 min.",
+        "Cuire le riz 11 min et servir."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cuisses-poulet",
+          "qteParPortion": 0.22
+        },
+        {
+          "ingredientId": "poivrons",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "nom": "Gratin de poulet au brocoli",
+      "famille": "volaille",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Cuire le riz 11 min et le brocoli 6 min.",
+        "Sauter le poulet en dés 5 min.",
+        "Mélanger riz, brocoli, poulet et crème dans un plat.",
+        "Couvrir d'emmental, gratiner 12 min à 200 °C."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "brocoli",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.07
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "nom": "Croque-madame, salade",
+      "famille": "porc",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [
+        "Monter les croques : pain, jambon, emmental, pain.",
+        "Les dorer 8 min au four à 200 °C.",
+        "Cuire les œufs au plat 3 min.",
+        "Poser un œuf sur chaque croque, servir avec la salade."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pain-de-mie",
+          "qteParPortion": 4
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.2
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "nom": "Boulettes de bœuf sauce tomate",
+      "famille": "bœuf",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch",
+        "enfants"
+      ],
+      "etapes": [
+        "Mélanger le bœuf, l'œuf et la chapelure ; saler, poivrer.",
+        "Former des boulettes, les dorer 5 min.",
+        "Ajouter les tomates concassées, mijoter 15 min.",
+        "Cuire les spaghetti 8 min et servir avec les boulettes."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "boeuf-hache",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "chapelure",
+          "qteParPortion": 0.01
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "spaghetti",
+          "qteParPortion": 0.09
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "nom": "Riz à la mexicaine",
+      "famille": "bœuf",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Faire revenir le bœuf haché 5 min en l'émiettant.",
+        "Ajouter poivrons en dés, maïs et épices (cumin, paprika), 3 min.",
+        "Verser tomates concassées et riz, couvrir d'eau.",
+        "Cuire 15 min à couvert, jusqu'à absorption."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "boeuf-hache",
+          "qteParPortion": 0.09
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "mais-conserve",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "poivrons",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.1
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "nom": "Parmentier de thon",
+      "famille": "poisson",
+      "tempsMinutes": 40,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants",
+        "batch"
+      ],
+      "etapes": [
+        "Cuire les pommes de terre 20 min, les écraser avec le lait.",
+        "Émietter le thon égoutté au fond d'un plat.",
+        "Recouvrir de purée, parsemer d'emmental.",
+        "Gratiner 15 min à 200 °C."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "thon-conserve",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "nom": "Salade de riz au thon et maïs",
+      "famille": "poisson",
+      "tempsMinutes": 20,
+      "saisons": [
+        "été"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [
+        "Cuire le riz 11 min, le rincer à l'eau froide.",
+        "Cuire les œufs durs 9 min, les écaler et les couper.",
+        "Mélanger riz, thon égoutté, maïs et tomates en dés.",
+        "Assaisonner d'une vinaigrette et servir frais."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "thon-conserve",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "mais-conserve",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "tomates",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
         }
       ]
     }

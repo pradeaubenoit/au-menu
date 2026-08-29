@@ -765,6 +765,104 @@
         "gluc": 1,
         "fib": 0
       }
+    },
+    {
+      "id": "farine",
+      "nom": "Farine",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 1.0,
+      "nutrition": {
+        "kcal": 350,
+        "prot": 10,
+        "lip": 1,
+        "gluc": 73,
+        "fib": 3
+      }
+    },
+    {
+      "id": "sardines-conserve",
+      "nom": "Sardines en conserve",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 9.0,
+      "nutrition": {
+        "kcal": 210,
+        "prot": 24,
+        "lip": 13,
+        "gluc": 0,
+        "fib": 0
+      }
+    },
+    {
+      "id": "chou-vert",
+      "nom": "Chou vert",
+      "unite": "kg",
+      "rayon": "Fruits & légumes",
+      "prixBase": 1.8,
+      "nutrition": {
+        "kcal": 25,
+        "prot": 2,
+        "lip": 0.2,
+        "gluc": 4,
+        "fib": 2.5
+      }
+    },
+    {
+      "id": "potiron",
+      "nom": "Potiron",
+      "unite": "kg",
+      "rayon": "Fruits & légumes",
+      "prixBase": 2.0,
+      "nutrition": {
+        "kcal": 20,
+        "prot": 1,
+        "lip": 0.1,
+        "gluc": 4,
+        "fib": 1
+      }
+    },
+    {
+      "id": "petits-pois-surgeles",
+      "nom": "Petits pois (surgelés)",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 2.5,
+      "nutrition": {
+        "kcal": 80,
+        "prot": 5,
+        "lip": 0.5,
+        "gluc": 12,
+        "fib": 5
+      }
+    },
+    {
+      "id": "mais-conserve",
+      "nom": "Maïs en conserve",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 3.0,
+      "nutrition": {
+        "kcal": 100,
+        "prot": 3,
+        "lip": 1.5,
+        "gluc": 19,
+        "fib": 3
+      }
+    },
+    {
+      "id": "navets",
+      "nom": "Navets",
+      "unite": "kg",
+      "rayon": "Fruits & légumes",
+      "prixBase": 1.6,
+      "nutrition": {
+        "kcal": 20,
+        "prot": 1,
+        "lip": 0.1,
+        "gluc": 4,
+        "fib": 1.8
+      }
     }
   ],
   "prixEnseignes": [

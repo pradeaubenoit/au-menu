@@ -1,15 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import dataIng from "./data/ingredients.json";
 import dataRec from "./data/recettes.json";
 
 /* ============================================================
-   AU MENU — prototype v2 (quiz → menus midi/soir → courses)
-   Structure de données alignée sur ingredients.json / recettes.json :
-   - INGREDIENTS : prix de référence + nutrition (copie condensée)
-   - PRIX_ENSEIGNES : prix relevés qui PRIMENT sur prixBase × coef
-   - RECETTES : références d'ingrédients par id
-   Dans le vrai projet, ces constantes seront remplacées par un
-   import des JSON puis par des tables Supabase.
+   AU MENU — v3 (quiz → menus midi/soir → recettes → cuisine → courses)
+   Données chargées depuis src/data/*.json (source de vérité).
    ============================================================ */
 
 const MAGASINS = [
@@ -27,6 +22,7 @@ const INGREDIENTS = Object.fromEntries(
 const PRIX_ENSEIGNES = dataIng.prixEnseignes.map((p) => ({ ing: p.ingredientId, mag: p.enseigne, prix: p.prix }));
 const RECETTES = dataRec.recettes.map((r) => ({
   id: r.id, nom: r.nom, famille: r.famille, temps: r.tempsMinutes, saisons: r.saisons, tags: r.tags,
+  etapes: r.etapes || [],
   ing: r.ingredients.map((x) => [x.ingredientId, x.qteParPortion]),
 }));
 
@@ -37,7 +33,6 @@ const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dim
 const eur = (n) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 
-// Prix relevé s'il existe, sinon prix de référence × coefficient d'enseigne
 const prixIngredient = (ingId, mag) => {
   const releve = PRIX_ENSEIGNES.find((p) => p.ing === ingId && p.mag === mag.id);
   return releve ? releve.prix : INGREDIENTS[ingId].prix * mag.coef;
@@ -45,8 +40,20 @@ const prixIngredient = (ingId, mag) => {
 const coutParPersonne = (r, mag) => r.ing.reduce((s, [id, q]) => s + q * prixIngredient(id, mag), 0);
 const kcalParPortion = (r) => Math.round(r.ing.reduce((s, [id, q]) => {
   const ing = INGREDIENTS[id];
-  return s + (ing.u === "pc" ? q : q * 10) * ing.n.kcal; // nutrition /100g → 1 kg = ×10
+  return s + (ing.u === "pc" ? q : q * 10) * ing.n.kcal;
 }, 0));
+
+const formatQte = (u, qte) => {
+  if (u === "pc") return `${Math.ceil(qte)} pc`;
+  if (u === "L") return qte < 1 ? `${Math.round(qte * 100) * 10} ml` : `${(Math.round(qte * 10) / 10).toLocaleString("fr-FR")} L`;
+  return qte < 1 ? `${Math.round(qte * 100) * 10} g` : `${(Math.round(qte * 20) / 20).toLocaleString("fr-FR")} kg`;
+};
+
+// Détecte une durée ("15 min") dans une étape pour proposer une minuterie
+const dureeEtape = (texte) => {
+  const m = texte.match(/(\d+)\s*min/);
+  return m ? parseInt(m[1], 10) * 60 : null;
+};
 
 function recettesEligibles(regime, sansPoisson) {
   return RECETTES.filter((r) => {
@@ -62,12 +69,10 @@ function composerMenu(eligibles, slots, budget, mag, opts = {}) {
   const n = slots.length;
   const menu = gardes.slice(0, n);
   const dansMenu = (r) => menu.some((m) => m.id === r.id);
-  // On privilégie les recettes pas vues la semaine passée, avec repli si besoin
   const frais = shuffle(eligibles.filter((r) => !dansMenu(r) && !eviter.includes(r.id)));
   const secours = shuffle(eligibles.filter((r) => !dansMenu(r) && eviter.includes(r.id)));
   const pool = [...frais, ...secours];
 
-  // Objectifs d'équilibre (esprit des repères PNNS)
   const nb = (f) => menu.filter((r) => r.famille === f).length;
   const rouge = () => nb("bœuf") + nb("porc");
   const ciblePoisson = eligibles.some((r) => r.famille === "poisson") ? (n >= 6 ? 2 : 1) : 0;
@@ -86,11 +91,9 @@ function composerMenu(eligibles, slots, budget, mag, opts = {}) {
     const ok = prendre((r) => (r.famille === "bœuf" || r.famille === "porc" ? rouge() < maxRouge : true));
     if (!ok && !prendre(() => true)) break;
   }
-  // Plus de repas que de recettes disponibles : on autorise les répétitions
   const boucle = shuffle(eligibles);
   while (menu.length < n && boucle.length) menu.push(boucle[menu.length % boucle.length]);
 
-  // Budget : on remplace les repas chers — jamais un plat gardé, sans casser l'équilibre
   const gardeIds = gardes.map((g) => g.id);
   const cout = (r, i) => coutParPersonne(r, mag) * slots[i].portions;
   const total = () => menu.reduce((s, r, i) => s + cout(r, i), 0);
@@ -122,16 +125,11 @@ function listeCourses(menu, slots, mag) {
     map[id].qte += q * slots[i].portions;
     map[id].prix += q * slots[i].portions * prixIngredient(id, mag);
   } });
-  const fmtQ = (it) => {
-    if (it.u === "pc") return `${Math.ceil(it.qte)} pc`;
-    if (it.u === "L") return it.qte < 1 ? `${Math.round(it.qte * 100) * 10} ml` : `${(Math.round(it.qte * 10) / 10).toLocaleString("fr-FR")} L`;
-    return it.qte < 1 ? `${Math.round(it.qte * 100) * 10} g` : `${(Math.round(it.qte * 20) / 20).toLocaleString("fr-FR")} kg`;
-  };
   return RAYONS.map((rayon) => ({
     rayon,
     items: Object.values(map).filter((i) => i.rayon === rayon)
       .sort((a, b) => a.nom.localeCompare(b.nom))
-      .map((i) => ({ ...i, qteAff: fmtQ(i) })),
+      .map((i) => ({ ...i, qteAff: formatQte(i.u, i.qte) })),
   })).filter((g) => g.items.length);
 }
 
@@ -146,16 +144,31 @@ function Stepper({ value, onChange, min, max }) {
   );
 }
 
+function Minuterie({ secondes }) {
+  const [reste, setReste] = useState(null); // null = pas lancée
+  useEffect(() => {
+    if (reste === null || reste <= 0) return;
+    const t = setTimeout(() => setReste(reste - 1), 1000);
+    return () => clearTimeout(t);
+  }, [reste]);
+  if (reste === null)
+    return <button className="minuterie" onClick={() => setReste(secondes)}>⏱ Lancer {Math.round(secondes / 60)} min</button>;
+  if (reste <= 0)
+    return <button className="minuterie fini" onClick={() => setReste(null)}>⏰ C'est prêt ! (toucher pour réinitialiser)</button>;
+  const mn = Math.floor(reste / 60), sec = String(reste % 60).padStart(2, "0");
+  return <button className="minuterie enCours" onClick={() => setReste(null)}>⏱ {mn}:{sec} — toucher pour annuler</button>;
+}
+
 export default function App() {
   const [ecran, setEcran] = useState("quiz");
   const [etape, setEtape] = useState(0);
   const [adultes, setAdultes] = useState(2);
-  const [petits, setPetits] = useState(0);   // 0–3 ans → 0,3 portion
-  const [moyens, setMoyens] = useState(1);   // 4–10 ans → 0,6 portion
-  const [ados, setAdos] = useState(0);       // 11–17 ans → 1,1 portion
+  const [petits, setPetits] = useState(0);
+  const [moyens, setMoyens] = useState(1);
+  const [ados, setAdos] = useState(0);
   const [nbMidis, setNbMidis] = useState(2);
   const [nbSoirs, setNbSoirs] = useState(7);
-  const [aMidi, setAMidi] = useState(1);   // présents le midi
+  const [aMidi, setAMidi] = useState(1);
   const [pMidi, setPMidi] = useState(0);
   const [mMidi, setMMidi] = useState(0);
   const [adMidi, setAdMidi] = useState(0);
@@ -167,6 +180,8 @@ export default function App() {
   const [menu, setMenu] = useState([]);
   const [coches, setCoches] = useState({});
   const [gardeIds, setGardeIds] = useState([]);
+  const [detail, setDetail] = useState(null);       // index du repas ouvert
+  const [etapeCuisine, setEtapeCuisine] = useState(0);
 
   const portionsSoir = adultes + petits * 0.3 + moyens * 0.6 + ados * 1.1;
   const portionsMidi = aMidi + pMidi * 0.3 + mMidi * 0.6 + adMidi * 1.1;
@@ -185,7 +200,7 @@ export default function App() {
   const magSel = MAGASINS.filter((m) => magasins.includes(m.id));
   const toggleMagasin = (id) => {
     const suiv = magasins.includes(id) ? magasins.filter((x) => x !== id) : [...magasins, id];
-    if (!suiv.length) return; // toujours au moins une enseigne
+    if (!suiv.length) return;
     setMagasins(suiv);
     if (!suiv.includes(magActif)) setMagActif(suiv[0]);
   };
@@ -194,6 +209,15 @@ export default function App() {
   const coutPlat = (r, i) => coutParPersonne(r, mag) * slots[i].portions;
   const total = menu.reduce((s, r, i) => s + coutPlat(r, i), 0);
   const eligibles = useMemo(() => recettesEligibles(regime, sansPoisson), [regime, sansPoisson]);
+
+  // Mode cuisine : garder l'écran allumé (si le navigateur le permet)
+  useEffect(() => {
+    let verrou;
+    if (ecran === "cuisine" && "wakeLock" in navigator) {
+      navigator.wakeLock.request("screen").then((v) => { verrou = v; }).catch(() => {});
+    }
+    return () => { if (verrou) verrou.release().catch(() => {}); };
+  }, [ecran]);
 
   const generer = () => {
     if (!slots.length) return;
@@ -226,6 +250,9 @@ export default function App() {
     copie[i] = shuffle(dispo)[0];
     setMenu(copie); setCoches({});
   };
+
+  const ouvrirRecette = (i) => { setDetail(i); setEcran("recette"); };
+  const lancerCuisine = () => { setEtapeCuisine(0); setEcran("cuisine"); };
 
   const groupes = useMemo(() => listeCourses(menu, slots, mag), [menu, slots, mag]);
 
@@ -307,6 +334,8 @@ export default function App() {
   ];
 
   const derniere = etape === ETAPES.length - 1;
+  const rDetail = detail !== null ? menu[detail] : null;
+  const sDetail = detail !== null ? slots[detail] : null;
 
   return (
     <div className="app">
@@ -350,7 +379,7 @@ export default function App() {
               <span>🍗 {menu.filter((r) => r.famille === "volaille").length} volaille</span>
               <span>🥩 {menu.filter((r) => r.famille === "bœuf" || r.famille === "porc").length} viande rouge</span>
             </div>
-            <p className="note">Touchez le ♥ des plats appréciés : ils seront reconduits la semaine prochaine.</p>
+            <p className="note">Touchez un plat pour voir sa recette, ou son ♥ pour le reconduire la semaine prochaine.</p>
           </section>
 
           {magSel.length > 1 && (
@@ -379,8 +408,10 @@ export default function App() {
                       onClick={() => toggleGarde(r.id)} aria-label="À refaire la semaine prochaine">♥</button>
                   </span>
                 </div>
-                <h2>{r.nom}</h2>
-                <p className="meta">{r.temps} min · ≈ {kcalParPortion(r)} kcal/portion</p>
+                <button className="ouvrir" onClick={() => ouvrirRecette(i)}>
+                  <h2>{r.nom} <span className="chevron">›</span></h2>
+                  <p className="meta">{r.temps} min · ≈ {kcalParPortion(r)} kcal/portion</p>
+                </button>
                 <div className="jourPied">
                   <span className="tag">{eur(coutPlat(r, i))}</span>
                   <button className="lien" onClick={() => remplacer(i)}>↻ Changer de plat</button>
@@ -396,6 +427,71 @@ export default function App() {
             </button>
             <button className="second" onClick={() => semaineSuivante(true)}>Semaine suivante — tout changer</button>
           </div>
+        </main>
+      )}
+
+      {ecran === "recette" && rDetail && (
+        <main>
+          <button className="lien retour" onClick={() => setEcran("menu")}>← Retour aux menus</button>
+          <section className="carte">
+            <div className="jourTete">
+              <span className="jourNom">{sDetail.jour} <em className={"moment " + sDetail.type}>{sDetail.type}</em></span>
+              <span className="cat">{rDetail.famille}</span>
+            </div>
+            <h1 className="titreRecette">{rDetail.nom}</h1>
+            <p className="meta">{rDetail.temps} min · ≈ {kcalParPortion(rDetail)} kcal/portion · {eur(coutPlat(rDetail, detail))} chez {mag.nom}</p>
+
+            <h3 className="sousTitre">Ingrédients <span className="portionsInfo">pour {sDetail.portions.toLocaleString("fr-FR")} portion{sDetail.portions > 1 ? "s" : ""}</span></h3>
+            <ul className="listeIng">
+              {rDetail.ing.map(([id, q]) => (
+                <li key={id}>
+                  <span className="qte">{formatQte(INGREDIENTS[id].u, q * sDetail.portions)}</span>
+                  <span>{INGREDIENTS[id].nom}</span>
+                </li>
+              ))}
+            </ul>
+
+            {rDetail.etapes.length > 0 ? (
+              <>
+                <h3 className="sousTitre">Préparation</h3>
+                <ol className="etapesListe">
+                  {rDetail.etapes.map((e, i) => <li key={i}>{e}</li>)}
+                </ol>
+                <div className="actions colonne">
+                  <button className="prim" onClick={lancerCuisine}>👨‍🍳 Lancer le mode cuisine</button>
+                </div>
+              </>
+            ) : (
+              <p className="note">Les étapes de cette recette seront bientôt rédigées.</p>
+            )}
+          </section>
+        </main>
+      )}
+
+      {ecran === "cuisine" && rDetail && (
+        <main>
+          <section className="carte cuisine">
+            <div className="cuisineTete">
+              <span className="jourNom">{rDetail.nom}</span>
+              <span className="cuisineCompteur">Étape {etapeCuisine + 1} / {rDetail.etapes.length}</span>
+            </div>
+            <div className="points">
+              {rDetail.etapes.map((_, i) => <i key={i} className={i <= etapeCuisine ? "on" : ""} />)}
+            </div>
+            <p className="cuisineTexte">{rDetail.etapes[etapeCuisine]}</p>
+            {dureeEtape(rDetail.etapes[etapeCuisine]) && (
+              <Minuterie key={etapeCuisine} secondes={dureeEtape(rDetail.etapes[etapeCuisine])} />
+            )}
+            <div className="cuisineNav">
+              <button className="second" disabled={etapeCuisine === 0} onClick={() => setEtapeCuisine(etapeCuisine - 1)}>← Précédent</button>
+              {etapeCuisine < rDetail.etapes.length - 1 ? (
+                <button className="prim" onClick={() => setEtapeCuisine(etapeCuisine + 1)}>Suivant →</button>
+              ) : (
+                <button className="prim" onClick={() => setEcran("menu")}>Bon appétit ! ✓</button>
+              )}
+            </div>
+            <button className="lien quitter" onClick={() => setEcran("recette")}>Quitter le mode cuisine</button>
+          </section>
         </main>
       )}
 
@@ -451,6 +547,7 @@ const CSS = `
 .carte{background:var(--carte);border:1px solid var(--ligne);border-radius:16px;padding:24px}
 h1{font-size:24px;font-weight:800;line-height:1.15;margin-bottom:20px}
 h2{font-size:18px;font-weight:800;margin:6px 0 2px}
+.titreRecette{margin-bottom:4px;margin-top:10px}
 .meta{font-size:12px;color:#6B7365;margin:0 0 10px}
 .note{font-size:13px;color:#6B7365;margin-top:12px}
 .points{display:flex;gap:6px;margin-bottom:18px}
@@ -474,7 +571,7 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .puce.on{background:var(--vertF);border-color:var(--vertF);color:#fff}
 .puce.large{align-self:flex-start;margin-top:4px}
 .actions{display:flex;gap:12px;margin-top:24px;justify-content:flex-end}
-.actions.colonne{flex-direction:column;margin-top:0}
+.actions.colonne{flex-direction:column;margin-top:16px}
 .prim,.second{padding:14px 22px;border-radius:12px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer}
 .prim{background:var(--vertF);color:#fff;border:none}
 .prim:hover{background:var(--vert)}
@@ -483,6 +580,7 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .second:disabled{opacity:.45;cursor:default}
 .lien{background:none;border:none;color:var(--vertF);font-family:inherit;font-weight:600;font-size:14px;
   cursor:pointer;text-decoration:underline;padding:4px}
+.retour{align-self:flex-start;margin-bottom:-6px}
 .bilan{padding:20px 24px}
 .bilanTxt h1{margin-bottom:6px;font-size:20px}
 .bilanTxt p{font-family:'Space Mono',monospace;font-weight:700;font-size:16px}
@@ -515,6 +613,25 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .sousTitre{font-weight:800;font-size:14px;margin-top:8px}
 .cat{font-size:11px;color:#6B7365;border:1px solid var(--ligne);border-radius:999px;padding:2px 8px}
 .jourPied{display:flex;justify-content:space-between;align-items:center}
+.ouvrir{display:block;width:100%;text-align:left;background:none;border:none;padding:0;cursor:pointer;font-family:inherit;color:inherit}
+.chevron{color:var(--vert);font-weight:900}
+.portionsInfo{font-weight:400;color:#6B7365;font-size:12px}
+.listeIng{list-style:none;padding:0;margin:10px 0 6px;display:flex;flex-direction:column;gap:6px}
+.listeIng li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.listeIng .qte{font-family:'Space Mono',monospace;font-size:13px;color:#6B7365;min-width:72px;flex:none}
+.etapesListe{margin:12px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.5}
+.etapesListe li::marker{font-weight:800;color:var(--vertF)}
+.cuisine{display:flex;flex-direction:column;min-height:70vh}
+.cuisineTete{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+.cuisineCompteur{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#6B7365;flex:none}
+.cuisineTexte{font-size:24px;font-weight:600;line-height:1.45;flex:1;padding:12px 0}
+.minuterie{align-self:flex-start;margin:8px 0 16px;padding:12px 18px;border-radius:12px;border:1.5px solid var(--vertF);
+  background:#EDF5EF;color:var(--vertF);font-family:'Space Mono',monospace;font-weight:700;font-size:16px;cursor:pointer}
+.minuterie.enCours{background:var(--tag);border-color:var(--tag);color:var(--ink)}
+.minuterie.fini{background:var(--rouge);border-color:var(--rouge);color:#fff}
+.cuisineNav{display:flex;gap:12px;justify-content:space-between}
+.cuisineNav .prim,.cuisineNav .second{flex:1}
+.quitter{align-self:center;margin-top:14px}
 .ticket{background:#fff;border:1px solid var(--ligne);border-radius:4px;padding:20px 16px 28px;
   font-family:'Space Mono',monospace;font-size:13px;
   box-shadow:0 2px 10px rgba(32,36,31,.06)}
