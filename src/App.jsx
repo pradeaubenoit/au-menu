@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import dataIng from "./data/ingredients.json";
 import dataRec from "./data/recettes.json";
 import dataMaison from "./data/produits-maison.json";
+import { supabase } from "./supabase";
 
 /* ============================================================
    AU MENU — v3 (quiz → menus midi/soir → recettes → cuisine → courses)
@@ -35,13 +36,28 @@ const PRODUITS_MAISON = dataMaison.produits.map((p) => ({
 const RAYONS = ["Fruits & légumes", "Boucherie & poisson", "Crèmerie", "Épicerie"];
 const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
-/* ---------- sauvegarde locale de l'appareil (marche 1, avant Supabase) ---------- */
-const CLE_SAUVEGARDE = "au-menu-v1";
+/* ---------- réponses du quiz mémorisées sur l'appareil (confort de saisie) ---------- */
+const CLE_SAUVEGARDE = "au-menu-quiz-v2";
 const SAUV = (() => {
   try { return JSON.parse(localStorage.getItem(CLE_SAUVEGARDE)) || {}; }
   catch { return {}; }
 })();
-const menuSauvegardeValide = Array.isArray(SAUV.menuIds) && SAUV.menuIds.length > 0;
+
+/* ---------- semaines datées ---------- */
+// Lundi (ISO aaaa-mm-jj) de la semaine contenant la date donnée
+const lundiDe = (d) => {
+  const x = new Date(d);
+  x.setHours(12, 0, 0, 0); // évite les surprises de fuseau
+  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  return x.toISOString().slice(0, 10);
+};
+const decalerLundi = (iso, semaines) => {
+  const d = new Date(iso + "T12:00:00");
+  d.setDate(d.getDate() + semaines * 7);
+  return d.toISOString().slice(0, 10);
+};
+const libelleSemaine = (iso) =>
+  "Semaine du " + new Date(iso + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
 
 /* ---------- couche d'accès prix & nutrition ---------- */
 const eur = (n) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
@@ -182,13 +198,17 @@ function Minuterie({ secondes }) {
 }
 
 export default function App() {
-  // Chaque état repart de la sauvegarde de l'appareil quand elle existe
-  const [menu, setMenu] = useState(() => {
-    if (!menuSauvegardeValide) return [];
-    const retrouvees = SAUV.menuIds.map((id) => RECETTES.find((r) => r.id === id)).filter(Boolean);
-    return retrouvees.length === SAUV.menuIds.length ? retrouvees : [];
-  });
-  const [ecran, setEcran] = useState(() => (menuSauvegardeValide ? "menu" : "quiz"));
+  // Compte utilisateur (undefined = vérification en cours, null = déconnecté)
+  const [session, setSession] = useState(undefined);
+  const [emailSaisi, setEmailSaisi] = useState("");
+  const [lienEnvoye, setLienEnvoye] = useState(false);
+  const [erreurConnexion, setErreurConnexion] = useState("");
+  // Semaine actuellement consultée (lundi ISO) + chargement depuis la base
+  const [dateLundi, setDateLundi] = useState(() => lundiDe(new Date()));
+  const [chargementSemaine, setChargementSemaine] = useState(false);
+
+  const [menu, setMenu] = useState([]);
+  const [ecran, setEcran] = useState("menu");
   const [etape, setEtape] = useState(0);
   const [adultes, setAdultes] = useState(SAUV.adultes ?? 2);
   const [petits, setPetits] = useState(SAUV.petits ?? 0);
@@ -205,8 +225,8 @@ export default function App() {
   const [sansPoisson, setSansPoisson] = useState(SAUV.sansPoisson ?? false);
   const [magasins, setMagasins] = useState(SAUV.magasins ?? ["leclerc", "lidl"]);
   const [magActif, setMagActif] = useState(SAUV.magActif ?? "leclerc");
-  const [coches, setCoches] = useState(SAUV.coches ?? {});
-  const [gardeIds, setGardeIds] = useState(SAUV.gardeIds ?? []);
+  const [coches, setCoches] = useState({});
+  const [gardeIds, setGardeIds] = useState([]);
   const [detail, setDetail] = useState(null);       // index du repas ouvert
   const [etapeCuisine, setEtapeCuisine] = useState(0);
   const [maisonEntretien, setMaisonEntretien] = useState(SAUV.maisonEntretien ?? false);
@@ -215,7 +235,7 @@ export default function App() {
   const [nbChats, setNbChats] = useState(SAUV.nbChats ?? 0);
   const [nbLapins, setNbLapins] = useState(SAUV.nbLapins ?? 0);
   const [nbTortues, setNbTortues] = useState(SAUV.nbTortues ?? 0);
-  const [cochesMaison, setCochesMaison] = useState(SAUV.cochesMaison ?? {});
+  const [cochesMaison, setCochesMaison] = useState({});
 
   const portionsSoir = adultes + petits * 0.3 + moyens * 0.6 + ados * 1.1;
   const portionsMidi = aMidi + pMidi * 0.3 + mMidi * 0.6 + adMidi * 1.1;
@@ -244,14 +264,90 @@ export default function App() {
   const total = menu.reduce((s, r, i) => s + coutPlat(r, i), 0);
   const eligibles = useMemo(() => recettesEligibles(regime, sansPoisson), [regime, sansPoisson]);
 
-  // Sauvegarde locale : tout changement est mémorisé sur cet appareil
+  const reponsesActuelles = () => ({ adultes, petits, moyens, ados, nbMidis, nbSoirs, aMidi, pMidi, mMidi, adMidi,
+    budget, regime, sansPoisson, magasins, magActif, maisonEntretien, maisonHygiene,
+    nbChiens, nbChats, nbLapins, nbTortues });
+
+  // Réponses du quiz mémorisées sur l'appareil (pré-remplissage)
   useEffect(() => {
-    const donnees = { adultes, petits, moyens, ados, nbMidis, nbSoirs, aMidi, pMidi, mMidi, adMidi,
-      budget, regime, sansPoisson, magasins, magActif, maisonEntretien, maisonHygiene,
-      nbChiens, nbChats, nbLapins, nbTortues, gardeIds, coches, cochesMaison,
-      menuIds: menu.map((r) => r.id) };
-    try { localStorage.setItem(CLE_SAUVEGARDE, JSON.stringify(donnees)); } catch { /* stockage indisponible : l'appli fonctionne sans */ }
+    try { localStorage.setItem(CLE_SAUVEGARDE, JSON.stringify(reponsesActuelles())); } catch { /* sans gravité */ }
   });
+
+  // Session : vérifier au démarrage, puis suivre connexions/déconnexions
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: abo } = supabase.auth.onAuthStateChange((_evt, s) => setSession(s));
+    return () => abo.subscription.unsubscribe();
+  }, []);
+
+  const appliquerReponses = (r) => {
+    if (!r) return;
+    setAdultes(r.adultes ?? 2); setPetits(r.petits ?? 0); setMoyens(r.moyens ?? 0); setAdos(r.ados ?? 0);
+    setNbMidis(r.nbMidis ?? 0); setNbSoirs(r.nbSoirs ?? 7);
+    setAMidi(r.aMidi ?? 1); setPMidi(r.pMidi ?? 0); setMMidi(r.mMidi ?? 0); setAdMidi(r.adMidi ?? 0);
+    setBudget(r.budget ?? 60); setRegime(r.regime ?? "tout"); setSansPoisson(r.sansPoisson ?? false);
+    setMagasins(r.magasins ?? ["leclerc"]); setMagActif(r.magActif ?? (r.magasins || ["leclerc"])[0]);
+    setMaisonEntretien(r.maisonEntretien ?? false); setMaisonHygiene(r.maisonHygiene ?? false);
+    setNbChiens(r.nbChiens ?? 0); setNbChats(r.nbChats ?? 0); setNbLapins(r.nbLapins ?? 0); setNbTortues(r.nbTortues ?? 0);
+  };
+
+  // Charger la semaine consultée depuis la base
+  useEffect(() => {
+    if (!session) return;
+    let actif = true;
+    (async () => {
+      setChargementSemaine(true);
+      const { data } = await supabase.from("semaines").select("*")
+        .eq("date_lundi", dateLundi).maybeSingle();
+      if (!actif) return;
+      setChargementSemaine(false);
+      if (data) {
+        appliquerReponses(data.reponses);
+        const plats = (data.menu_ids || []).map((id) => RECETTES.find((r) => r.id === id)).filter(Boolean);
+        setMenu(plats.length === (data.menu_ids || []).length ? plats : []);
+        setGardeIds(data.garde_ids || []);
+        setCoches(data.coches || {});
+        setCochesMaison(data.coches_maison || {});
+        setEcran("menu");
+      } else {
+        setMenu([]); setGardeIds([]); setCoches({}); setCochesMaison({});
+        setEcran((e) => (e === "quiz" ? e : "menu"));
+      }
+    })();
+    return () => { actif = false; };
+  }, [session, dateLundi]);
+
+  // Sauvegarder la semaine en base (léger différé pour grouper les frappes)
+  useEffect(() => {
+    if (!session || !menu.length) return;
+    const t = setTimeout(() => {
+      supabase.from("semaines").upsert({
+        user_id: session.user.id,
+        date_lundi: dateLundi,
+        reponses: reponsesActuelles(),
+        menu_ids: menu.map((r) => r.id),
+        garde_ids: gardeIds,
+        coches,
+        coches_maison: cochesMaison,
+        modifie_le: new Date().toISOString(),
+      }, { onConflict: "user_id,date_lundi" }).then(({ error }) => {
+        if (error) console.warn("Sauvegarde semaine :", error.message);
+      });
+    }, 800);
+    return () => clearTimeout(t);
+  });
+
+  const envoyerLien = async () => {
+    setErreurConnexion("");
+    const email = emailSaisi.trim();
+    if (!email.includes("@")) { setErreurConnexion("Adresse email invalide."); return; }
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.origin + import.meta.env.BASE_URL },
+    });
+    if (error) setErreurConnexion("Envoi impossible : " + error.message);
+    else setLienEnvoye(true);
+  };
 
   // Mode cuisine : garder l'écran allumé (si le navigateur le permet)
   useEffect(() => {
@@ -420,14 +516,56 @@ export default function App() {
   const rDetail = detail !== null ? menu[detail] : null;
   const sDetail = detail !== null ? slots[detail] : null;
 
+  if (session === undefined) {
+    return (
+      <div className="app"><style>{CSS}</style>
+        <header className="entete"><div className="logo">AU MENU<span>.</span></div></header>
+        <main className="carte"><p className="note">Ouverture…</p></main>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="app"><style>{CSS}</style>
+        <header className="entete"><div className="logo">AU MENU<span>.</span></div></header>
+        <main className="carte connexion">
+          <h1>Connexion</h1>
+          {!lienEnvoye ? (
+            <div className="rangs">
+              <p className="note">Entrez votre adresse email : vous recevrez un lien de connexion, sans mot de passe à retenir.</p>
+              <input className="champEmail" type="email" inputMode="email" autoComplete="email"
+                placeholder="votre@email.fr" value={emailSaisi}
+                onChange={(e) => setEmailSaisi(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && envoyerLien()} />
+              {erreurConnexion && <p className="erreur">{erreurConnexion}</p>}
+              <div className="actions">
+                <button className="prim" onClick={envoyerLien}>Recevoir mon lien de connexion</button>
+              </div>
+            </div>
+          ) : (
+            <div className="rangs">
+              <p>📬 Lien envoyé à <strong>{emailSaisi.trim()}</strong>.</p>
+              <p className="note">Ouvrez l'email (pensez aux indésirables) et touchez le lien : vous reviendrez ici, connecté. L'envoi peut prendre une minute, et le nombre d'emails par heure est limité — patience avant de redemander.</p>
+              <button className="lien" onClick={() => setLienEnvoye(false)}>Modifier l'adresse</button>
+            </div>
+          )}
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <style>{CSS}</style>
       <header className="entete">
         <div className="logo">AU MENU<span>.</span></div>
-        {ecran !== "quiz" && (
-          <button className="lien" onClick={() => { setEcran("quiz"); setEtape(0); }}>Modifier mes réponses</button>
-        )}
+        <span className="enteteDroite">
+          {ecran !== "quiz" && (
+            <button className="lien" onClick={() => { setEcran("quiz"); setEtape(0); }}>Modifier mes réponses</button>
+          )}
+          <button className="lien discret" onClick={() => supabase.auth.signOut()}>Déconnexion</button>
+        </span>
       </header>
 
       {ecran === "quiz" && (
@@ -450,6 +588,28 @@ export default function App() {
 
       {ecran === "menu" && (
         <main>
+          <nav className="semNav">
+            <button className="semBtn" aria-label="Semaine précédente" onClick={() => setDateLundi(decalerLundi(dateLundi, -1))}>◀</button>
+            <span className="semLibelle">
+              {libelleSemaine(dateLundi)}
+              {dateLundi === lundiDe(new Date()) && <em className="moment midi"> en cours</em>}
+            </span>
+            <button className="semBtn" aria-label="Semaine suivante" onClick={() => setDateLundi(decalerLundi(dateLundi, 1))}>▶</button>
+          </nav>
+
+          {chargementSemaine && <section className="carte"><p className="note">Chargement de la semaine…</p></section>}
+
+          {!chargementSemaine && menu.length === 0 && (
+            <section className="carte vide">
+              <h2>Rien de prévu cette semaine</h2>
+              <p className="note">Composez ses menus : ils seront enregistrés à cette date, sur votre compte, et retrouvables depuis n'importe quel appareil.</p>
+              <div className="actions">
+                <button className="prim" onClick={() => { setEcran("quiz"); setEtape(0); }}>Composer cette semaine</button>
+              </div>
+            </section>
+          )}
+
+          {!chargementSemaine && menu.length > 0 && (<>
           <section className="carte bilan">
             <div className="bilanTxt">
               <h1>Vos {menu.length} repas chez {mag.nom}</h1>
@@ -512,10 +672,11 @@ export default function App() {
           <div className="actions colonne">
             <button className="prim" onClick={() => setEcran("liste")}>Voir la liste de courses</button>
             <button className="second" disabled={!gardeIds.length} onClick={() => semaineSuivante(false)}>
-              Semaine suivante — garder mes ♥ ({gardeIds.length})
+              Regénérer — garder mes ♥ ({gardeIds.length})
             </button>
-            <button className="second" onClick={() => semaineSuivante(true)}>Semaine suivante — tout changer</button>
+            <button className="second" onClick={() => semaineSuivante(true)}>Regénérer — tout changer</button>
           </div>
+          </>)}
         </main>
       )}
 
@@ -693,6 +854,15 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
   cursor:pointer;text-decoration:underline;padding:4px}
 .retour{align-self:flex-start;margin-bottom:-6px}
 .reinit{display:block;margin:18px auto 0;color:#9AA294;font-size:12px}
+.enteteDroite{display:flex;align-items:center;gap:4px}
+.discret{color:#9AA294;text-decoration:none}
+.connexion h1{margin-bottom:8px}
+.champEmail{padding:14px;border:1.5px solid var(--ligne);border-radius:12px;font-family:inherit;font-size:16px;width:100%}
+.erreur{color:var(--rouge);font-size:13px;font-weight:600}
+.semNav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:2px}
+.semBtn{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--ligne);background:#fff;cursor:pointer;font-size:14px}
+.semLibelle{font-weight:800;font-size:16px}
+.vide h2{margin-bottom:6px}
 .bilan{padding:20px 24px}
 .bilanTxt h1{margin-bottom:6px;font-size:20px}
 .bilanTxt p{font-family:'Space Mono',monospace;font-weight:700;font-size:16px}
