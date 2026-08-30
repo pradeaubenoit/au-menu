@@ -1003,6 +1003,60 @@
         "gluc": 4,
         "fib": 1.8
       }
+    },
+    {
+      "id": "feuilles-lasagne",
+      "nom": "Feuilles de lasagne",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 3.8,
+      "nutrition": {
+        "kcal": 350,
+        "prot": 13,
+        "lip": 1.5,
+        "gluc": 70,
+        "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
+      }
+    },
+    {
+      "id": "pate-pizza",
+      "nom": "Pâte à pizza",
+      "unite": "pc",
+      "rayon": "Crèmerie",
+      "prixBase": 1.8,
+      "nutrition": {
+        "kcal": 750,
+        "prot": 20,
+        "lip": 10,
+        "gluc": 140,
+        "fib": 5
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "rouleau"
+      }
+    },
+    {
+      "id": "pains-hot-dog",
+      "nom": "Pains hot-dog",
+      "unite": "pc",
+      "rayon": "Épicerie",
+      "prixBase": 0.35,
+      "nutrition": {
+        "kcal": 250,
+        "prot": 8,
+        "lip": 4,
+        "gluc": 45,
+        "fib": 2
+      },
+      "conditionnement": {
+        "qte": 6,
+        "libelle": "paquet de 6"
+      }
     }
   ],
   "prixEnseignes": [

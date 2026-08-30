@@ -1938,6 +1938,403 @@
           "qteParPortion": 1
         }
       ]
+    },
+    {
+      "id": 51,
+      "nom": "Lasagnes à la bolognaise",
+      "famille": "bœuf",
+      "tempsMinutes": 60,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "batch",
+        "enfants"
+      ],
+      "etapes": [
+        "Faire revenir l'oignon 3 min, ajouter le bœuf, cuire 5 min en émiettant.",
+        "Ajouter les tomates concassées, mijoter 10 min.",
+        "Préparer la béchamel : beurre, farine, puis lait en fouettant 5 min.",
+        "Monter les couches : sauce, feuilles de lasagne, béchamel ; répéter.",
+        "Couvrir d'emmental et cuire 35 min au four à 190 °C."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "feuilles-lasagne",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "boeuf-hache",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "lait",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "farine",
+          "qteParPortion": 0.015
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.01
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.025
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "nom": "Quiche aux poireaux",
+      "famille": "végé",
+      "tempsMinutes": 45,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [],
+      "etapes": [
+        "Préchauffer le four à 180 °C ; foncer un moule avec la pâte.",
+        "Émincer les poireaux, les faire fondre 10 min à la poêle avec le beurre.",
+        "Battre les œufs avec la crème, poivrer, ajouter les poireaux.",
+        "Verser sur la pâte et enfourner 35 min."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pate-brisee",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "poireaux",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.008
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "nom": "Tarte au thon",
+      "famille": "poisson",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C ; dérouler la pâte dans un moule.",
+        "Mélanger thon égoutté, tomates concassées, œuf et crème.",
+        "Verser sur la pâte.",
+        "Enfourner 30 min et servir avec une salade si vous en avez."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pate-feuilletee",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "thon-conserve",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "oeufs",
+          "qteParPortion": 0.5
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.05
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "nom": "Tourte au poulet",
+      "famille": "volaille",
+      "tempsMinutes": 50,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Sauter le poulet en dés 5 min avec les champignons émincés.",
+        "Ajouter la crème, poivrer, laisser tiédir.",
+        "Garnir un moule d'une pâte, verser la préparation, couvrir de la seconde pâte et souder les bords.",
+        "Dorer à l'œuf si vous en avez, percer une cheminée, cuire 35 min à 190 °C."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pate-feuilletee",
+          "qteParPortion": 0.5
+        },
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "champignons",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.06
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "nom": "Pizza maison au thon",
+      "famille": "poisson",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [
+        "Préchauffer le four à 220 °C ; dérouler la pâte à pizza.",
+        "Étaler les tomates concassées, répartir thon égoutté et oignon émincé.",
+        "Couvrir d'emmental.",
+        "Cuire 15 min, jusqu'à ce que les bords dorent."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pate-pizza",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "thon-conserve",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "nom": "Tagliatelles jambon-crème",
+      "famille": "porc",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [
+        "Cuire les tagliatelles 8 min.",
+        "Tailler le jambon en lanières, le réchauffer 2 min dans la crème.",
+        "Mélanger pâtes et sauce, poivrer.",
+        "Servir avec le parmesan."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "tagliatelles",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.07
+        },
+        {
+          "ingredientId": "parmesan",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "nom": "One-pot pasta poulet-tomates",
+      "famille": "volaille",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [
+        "Tailler le poulet en dés, le dorer 4 min dans la casserole.",
+        "Ajouter l'oignon émincé, les penne, les tomates concassées et deux verres d'eau par personne.",
+        "Cuire 12 min à feu moyen en remuant souvent, jusqu'à absorption.",
+        "Rectifier l'assaisonnement et servir directement."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "penne",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.04
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "nom": "Hot-dogs maison, salade",
+      "famille": "porc",
+      "tempsMinutes": 15,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "rapide",
+        "enfants"
+      ],
+      "etapes": [
+        "Chauffer les saucisses 5 min dans l'eau frémissante.",
+        "Tiédir les pains 2 min au four.",
+        "Garnir : saucisse, emmental, moutarde ou ketchup selon les goûts.",
+        "Servir avec la salade assaisonnée."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pains-hot-dog",
+          "qteParPortion": 1.5
+        },
+        {
+          "ingredientId": "saucisses-fumees",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.015
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.2
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "nom": "Feuilletés jambon-fromage, salade",
+      "famille": "porc",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "enfants"
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C ; découper la pâte en rectangles.",
+        "Garnir la moitié des rectangles de jambon et d'emmental.",
+        "Couvrir avec les autres rectangles, souder les bords à la fourchette.",
+        "Cuire 18 min et servir avec la salade."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pate-feuilletee",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "jambon-blanc",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.25
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "nom": "Pizza courgette-chèvre",
+      "famille": "végé",
+      "tempsMinutes": 25,
+      "saisons": [
+        "été"
+      ],
+      "tags": [
+        "rapide"
+      ],
+      "etapes": [
+        "Préchauffer le four à 220 °C ; dérouler la pâte à pizza.",
+        "Étaler une fine couche de tomates concassées.",
+        "Répartir les courgettes en fines rondelles et le chèvre émietté.",
+        "Cuire 15 min ; un filet d'huile d'olive à la sortie du four."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pate-pizza",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "courgettes",
+          "qteParPortion": 0.12
+        },
+        {
+          "ingredientId": "chevre",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.06
+        }
+      ]
     }
   ]
 }
