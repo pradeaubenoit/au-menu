@@ -14,6 +14,7 @@ const MAGASINS = [
   { id: "inter", nom: "Intermarché", coef: 0.95 },
   { id: "auchan", nom: "Auchan", coef: 0.97 },
   { id: "carrefour", nom: "Carrefour", coef: 1.0 },
+  { id: "superu", nom: "Super U", coef: 0.98 },
   { id: "monoprix", nom: "Monoprix", coef: 1.25 },
 ];
 
