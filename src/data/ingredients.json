@@ -22,6 +22,10 @@
         "lip": 1.5,
         "gluc": 72,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -36,6 +40,10 @@
         "lip": 2,
         "gluc": 71,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -50,6 +58,10 @@
         "lip": 1.5,
         "gluc": 72,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -64,6 +76,10 @@
         "lip": 1,
         "gluc": 78,
         "fib": 1.5
+      },
+      "conditionnement": {
+        "qte": 1.0,
+        "libelle": "sac 1 kg"
       }
     },
     {
@@ -78,6 +94,10 @@
         "lip": 1,
         "gluc": 77,
         "fib": 1.5
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -92,6 +112,10 @@
         "lip": 1,
         "gluc": 72,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -120,6 +144,10 @@
         "lip": 2,
         "gluc": 52,
         "fib": 11
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -134,6 +162,10 @@
         "lip": 1.5,
         "gluc": 47,
         "fib": 11
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
       }
     },
     {
@@ -148,6 +180,10 @@
         "lip": 2.5,
         "gluc": 20,
         "fib": 6
+      },
+      "conditionnement": {
+        "qte": 0.25,
+        "libelle": "boîte 250 g"
       }
     },
     {
@@ -162,6 +198,10 @@
         "lip": 0.5,
         "gluc": 16,
         "fib": 7
+      },
+      "conditionnement": {
+        "qte": 0.25,
+        "libelle": "boîte 250 g"
       }
     },
     {
@@ -176,6 +216,10 @@
         "lip": 0.2,
         "gluc": 3.5,
         "fib": 1.2
+      },
+      "conditionnement": {
+        "qte": 0.4,
+        "libelle": "boîte 400 g"
       }
     },
     {
@@ -414,6 +458,10 @@
         "lip": 17,
         "gluc": 0,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.25,
+        "libelle": "boîte de 2 (250 g)"
       }
     },
     {
@@ -442,6 +490,10 @@
         "lip": 27,
         "gluc": 0.5,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.2,
+        "libelle": "barquette 200 g"
       }
     },
     {
@@ -456,6 +508,10 @@
         "lip": 3.5,
         "gluc": 0.5,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.16,
+        "libelle": "barquette 4 tranches"
       }
     },
     {
@@ -470,6 +526,10 @@
         "lip": 27,
         "gluc": 1,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.35,
+        "libelle": "lot de 4"
       }
     },
     {
@@ -540,6 +600,10 @@
         "lip": 2,
         "gluc": 0,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.14,
+        "libelle": "boîte 140 g"
       }
     },
     {
@@ -568,6 +632,10 @@
         "lip": 5.5,
         "gluc": 0.5,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 6,
+        "libelle": "boîte de 6"
       }
     },
     {
@@ -582,6 +650,10 @@
         "lip": 1.6,
         "gluc": 4.8,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 1.0,
+        "libelle": "brique 1 L"
       }
     },
     {
@@ -596,6 +668,10 @@
         "lip": 18,
         "gluc": 3,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.4,
+        "libelle": "brique 40 cl"
       }
     },
     {
@@ -610,6 +686,10 @@
         "lip": 30,
         "gluc": 3,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.2,
+        "libelle": "pot 20 cl"
       }
     },
     {
@@ -624,6 +704,10 @@
         "lip": 82,
         "gluc": 0.5,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.25,
+        "libelle": "plaquette 250 g"
       }
     },
     {
@@ -638,6 +722,10 @@
         "lip": 29,
         "gluc": 0.5,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.2,
+        "libelle": "sachet 200 g"
       }
     },
     {
@@ -652,6 +740,10 @@
         "lip": 28,
         "gluc": 0.5,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.1,
+        "libelle": "sachet 100 g"
       }
     },
     {
@@ -666,6 +758,10 @@
         "lip": 23,
         "gluc": 1,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.15,
+        "libelle": "bûchette 150 g"
       }
     },
     {
@@ -680,6 +776,10 @@
         "lip": 50,
         "gluc": 95,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "rouleau"
       }
     },
     {
@@ -694,6 +794,10 @@
         "lip": 60,
         "gluc": 92,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "rouleau"
       }
     },
     {
@@ -708,6 +812,10 @@
         "lip": 1.5,
         "gluc": 17,
         "fib": 1
+      },
+      "conditionnement": {
+        "qte": 14,
+        "libelle": "paquet 14 tranches"
       }
     },
     {
@@ -722,6 +830,10 @@
         "lip": 3,
         "gluc": 20,
         "fib": 1.5
+      },
+      "conditionnement": {
+        "qte": 6,
+        "libelle": "paquet de 6"
       }
     },
     {
@@ -736,6 +848,10 @@
         "lip": 3,
         "gluc": 75,
         "fib": 4
+      },
+      "conditionnement": {
+        "qte": 0.25,
+        "libelle": "boîte 250 g"
       }
     },
     {
@@ -750,6 +866,10 @@
         "lip": 25,
         "gluc": 1,
         "fib": 7
+      },
+      "conditionnement": {
+        "qte": 0.15,
+        "libelle": "bocal 150 g"
       }
     },
     {
@@ -764,6 +884,10 @@
         "lip": 24,
         "gluc": 1,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "barquette 500 g"
       }
     },
     {
@@ -778,6 +902,10 @@
         "lip": 1,
         "gluc": 73,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 1.0,
+        "libelle": "paquet 1 kg"
       }
     },
     {
@@ -792,6 +920,10 @@
         "lip": 13,
         "gluc": 0,
         "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.12,
+        "libelle": "boîte 120 g"
       }
     },
     {
@@ -834,6 +966,10 @@
         "lip": 0.5,
         "gluc": 12,
         "fib": 5
+      },
+      "conditionnement": {
+        "qte": 0.75,
+        "libelle": "sachet 750 g"
       }
     },
     {
@@ -848,6 +984,10 @@
         "lip": 1.5,
         "gluc": 19,
         "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.28,
+        "libelle": "boîte 280 g"
       }
     },
     {

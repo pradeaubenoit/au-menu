@@ -17,7 +17,7 @@ const MAGASINS = [
 ];
 
 const INGREDIENTS = Object.fromEntries(
-  dataIng.ingredients.map((i) => [i.id, { nom: i.nom, u: i.unite, rayon: i.rayon, prix: i.prixBase, n: i.nutrition }])
+  dataIng.ingredients.map((i) => [i.id, { nom: i.nom, u: i.unite, rayon: i.rayon, prix: i.prixBase, n: i.nutrition, cond: i.conditionnement || null }])
 );
 const PRIX_ENSEIGNES = dataIng.prixEnseignes.map((p) => ({ ing: p.ingredientId, mag: p.enseigne, prix: p.prix }));
 const RECETTES = dataRec.recettes.map((r) => ({
@@ -121,15 +121,23 @@ function listeCourses(menu, slots, mag) {
   const map = {};
   menu.forEach((r, i) => { for (const [id, q] of r.ing) {
     const ing = INGREDIENTS[id];
-    if (!map[id]) map[id] = { nom: ing.nom, u: ing.u, rayon: ing.rayon, qte: 0, prix: 0 };
-    map[id].qte += q * slots[i].portions;
-    map[id].prix += q * slots[i].portions * prixIngredient(id, mag);
+    if (!map[id]) map[id] = { id, nom: ing.nom, u: ing.u, rayon: ing.rayon, cond: ing.cond, besoin: 0 };
+    map[id].besoin += q * slots[i].portions;
   } });
+  const items = Object.values(map).map((it) => {
+    const pu = prixIngredient(it.id, mag);
+    if (it.cond) {
+      // Achat en conditionnements entiers : "2 × boîte 140 g"
+      const n = Math.ceil(it.besoin / it.cond.qte - 1e-9);
+      return { ...it, qteAff: (n > 1 ? n + " × " : "") + it.cond.libelle,
+        besoinAff: formatQte(it.u, it.besoin), prix: n * it.cond.qte * pu };
+    }
+    // Vrac : au poids ou à la pièce
+    return { ...it, qteAff: formatQte(it.u, it.besoin), besoinAff: null, prix: it.besoin * pu };
+  });
   return RAYONS.map((rayon) => ({
     rayon,
-    items: Object.values(map).filter((i) => i.rayon === rayon)
-      .sort((a, b) => a.nom.localeCompare(b.nom))
-      .map((i) => ({ ...i, qteAff: formatQte(i.u, i.qte) })),
+    items: items.filter((i) => i.rayon === rayon).sort((a, b) => a.nom.localeCompare(b.nom)),
   })).filter((g) => g.items.length);
 }
 
@@ -510,16 +518,19 @@ export default function App() {
                     <input type="checkbox" checked={!!coches[it.nom]}
                       onChange={() => setCoches({ ...coches, [it.nom]: !coches[it.nom] })} />
                     <span className="qte">{it.qteAff}</span>
-                    <span className="nomI">{it.nom}</span>
+                    <span className="nomI">{it.nom}{it.besoinAff && <em className="besoin"> · besoin {it.besoinAff}</em>}</span>
                     <span className="prixI">{eur(it.prix)}</span>
                   </label>
                 ))}
               </div>
             ))}
             <div className="ticketTotal">
-              <span>TOTAL ESTIMÉ</span><span>{eur(total)}</span>
+              <span>TOTAL PANIER</span><span>{eur(groupes.reduce((s, g) => s + g.items.reduce((x, i) => x + i.prix, 0), 0))}</span>
             </div>
-            <p className="ticketNote">Prix relevés quand disponibles, sinon estimation (référence × coef. {mag.nom} {mag.coef.toLocaleString("fr-FR")})</p>
+            <div className="ticketSous">
+              <span>dont utilisé pour ces {menu.length} repas</span><span>{eur(total)}</span>
+            </div>
+            <p className="ticketNote">Le reste des paquets entamés garnit vos placards pour les semaines suivantes. Prix relevés quand disponibles, sinon estimation (coef. {mag.nom} {mag.coef.toLocaleString("fr-FR")}).</p>
           </section>
           <div className="actions colonne">
             <button className="second" onClick={() => setEcran("menu")}>← Retour aux menus</button>
@@ -641,7 +652,9 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .rayonNom{text-align:center;margin:14px 0 6px;color:#6B7365}
 .ligne{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer}
 .ligne input{accent-color:var(--vertF);width:16px;height:16px;flex:none}
-.qte{color:#6B7365;min-width:64px;flex:none}
+.qte{color:#6B7365;min-width:88px;flex:none}
+.besoin{font-style:normal;font-size:11px;color:#9AA294}
+.ticketSous{display:flex;justify-content:space-between;font-size:12px;color:#6B7365;margin-top:4px}
 .nomI{flex:1}
 .prixI{font-weight:700}
 .barre .nomI,.barre .qte,.barre .prixI{text-decoration:line-through;opacity:.45}
