@@ -35,6 +35,14 @@ const PRODUITS_MAISON = dataMaison.produits.map((p) => ({
 const RAYONS = ["Fruits & légumes", "Boucherie & poisson", "Crèmerie", "Épicerie"];
 const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
+/* ---------- sauvegarde locale de l'appareil (marche 1, avant Supabase) ---------- */
+const CLE_SAUVEGARDE = "au-menu-v1";
+const SAUV = (() => {
+  try { return JSON.parse(localStorage.getItem(CLE_SAUVEGARDE)) || {}; }
+  catch { return {}; }
+})();
+const menuSauvegardeValide = Array.isArray(SAUV.menuIds) && SAUV.menuIds.length > 0;
+
 /* ---------- couche d'accès prix & nutrition ---------- */
 const eur = (n) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -174,35 +182,40 @@ function Minuterie({ secondes }) {
 }
 
 export default function App() {
-  const [ecran, setEcran] = useState("quiz");
+  // Chaque état repart de la sauvegarde de l'appareil quand elle existe
+  const [menu, setMenu] = useState(() => {
+    if (!menuSauvegardeValide) return [];
+    const retrouvees = SAUV.menuIds.map((id) => RECETTES.find((r) => r.id === id)).filter(Boolean);
+    return retrouvees.length === SAUV.menuIds.length ? retrouvees : [];
+  });
+  const [ecran, setEcran] = useState(() => (menuSauvegardeValide ? "menu" : "quiz"));
   const [etape, setEtape] = useState(0);
-  const [adultes, setAdultes] = useState(2);
-  const [petits, setPetits] = useState(0);
-  const [moyens, setMoyens] = useState(1);
-  const [ados, setAdos] = useState(0);
-  const [nbMidis, setNbMidis] = useState(2);
-  const [nbSoirs, setNbSoirs] = useState(7);
-  const [aMidi, setAMidi] = useState(1);
-  const [pMidi, setPMidi] = useState(0);
-  const [mMidi, setMMidi] = useState(0);
-  const [adMidi, setAdMidi] = useState(0);
-  const [budget, setBudget] = useState(60);
-  const [regime, setRegime] = useState("tout");
-  const [sansPoisson, setSansPoisson] = useState(false);
-  const [magasins, setMagasins] = useState(["leclerc", "lidl"]);
-  const [magActif, setMagActif] = useState("leclerc");
-  const [menu, setMenu] = useState([]);
-  const [coches, setCoches] = useState({});
-  const [gardeIds, setGardeIds] = useState([]);
+  const [adultes, setAdultes] = useState(SAUV.adultes ?? 2);
+  const [petits, setPetits] = useState(SAUV.petits ?? 0);
+  const [moyens, setMoyens] = useState(SAUV.moyens ?? 1);
+  const [ados, setAdos] = useState(SAUV.ados ?? 0);
+  const [nbMidis, setNbMidis] = useState(SAUV.nbMidis ?? 2);
+  const [nbSoirs, setNbSoirs] = useState(SAUV.nbSoirs ?? 7);
+  const [aMidi, setAMidi] = useState(SAUV.aMidi ?? 1);
+  const [pMidi, setPMidi] = useState(SAUV.pMidi ?? 0);
+  const [mMidi, setMMidi] = useState(SAUV.mMidi ?? 0);
+  const [adMidi, setAdMidi] = useState(SAUV.adMidi ?? 0);
+  const [budget, setBudget] = useState(SAUV.budget ?? 60);
+  const [regime, setRegime] = useState(SAUV.regime ?? "tout");
+  const [sansPoisson, setSansPoisson] = useState(SAUV.sansPoisson ?? false);
+  const [magasins, setMagasins] = useState(SAUV.magasins ?? ["leclerc", "lidl"]);
+  const [magActif, setMagActif] = useState(SAUV.magActif ?? "leclerc");
+  const [coches, setCoches] = useState(SAUV.coches ?? {});
+  const [gardeIds, setGardeIds] = useState(SAUV.gardeIds ?? []);
   const [detail, setDetail] = useState(null);       // index du repas ouvert
   const [etapeCuisine, setEtapeCuisine] = useState(0);
-  const [maisonEntretien, setMaisonEntretien] = useState(false);
-  const [maisonHygiene, setMaisonHygiene] = useState(false);
-  const [nbChiens, setNbChiens] = useState(0);
-  const [nbChats, setNbChats] = useState(0);
-  const [nbLapins, setNbLapins] = useState(0);
-  const [nbTortues, setNbTortues] = useState(0);
-  const [cochesMaison, setCochesMaison] = useState({});
+  const [maisonEntretien, setMaisonEntretien] = useState(SAUV.maisonEntretien ?? false);
+  const [maisonHygiene, setMaisonHygiene] = useState(SAUV.maisonHygiene ?? false);
+  const [nbChiens, setNbChiens] = useState(SAUV.nbChiens ?? 0);
+  const [nbChats, setNbChats] = useState(SAUV.nbChats ?? 0);
+  const [nbLapins, setNbLapins] = useState(SAUV.nbLapins ?? 0);
+  const [nbTortues, setNbTortues] = useState(SAUV.nbTortues ?? 0);
+  const [cochesMaison, setCochesMaison] = useState(SAUV.cochesMaison ?? {});
 
   const portionsSoir = adultes + petits * 0.3 + moyens * 0.6 + ados * 1.1;
   const portionsMidi = aMidi + pMidi * 0.3 + mMidi * 0.6 + adMidi * 1.1;
@@ -230,6 +243,15 @@ export default function App() {
   const coutPlat = (r, i) => coutParPersonne(r, mag) * slots[i].portions;
   const total = menu.reduce((s, r, i) => s + coutPlat(r, i), 0);
   const eligibles = useMemo(() => recettesEligibles(regime, sansPoisson), [regime, sansPoisson]);
+
+  // Sauvegarde locale : tout changement est mémorisé sur cet appareil
+  useEffect(() => {
+    const donnees = { adultes, petits, moyens, ados, nbMidis, nbSoirs, aMidi, pMidi, mMidi, adMidi,
+      budget, regime, sansPoisson, magasins, magActif, maisonEntretien, maisonHygiene,
+      nbChiens, nbChats, nbLapins, nbTortues, gardeIds, coches, cochesMaison,
+      menuIds: menu.map((r) => r.id) };
+    try { localStorage.setItem(CLE_SAUVEGARDE, JSON.stringify(donnees)); } catch { /* stockage indisponible : l'appli fonctionne sans */ }
+  });
 
   // Mode cuisine : garder l'écran allumé (si le navigateur le permet)
   useEffect(() => {
@@ -420,6 +442,9 @@ export default function App() {
             {!derniere && <button className="prim" onClick={() => setEtape(etape + 1)}>Continuer</button>}
             {derniere && <button className="prim" disabled={nbRepas === 0} onClick={generer}>Composer mes menus</button>}
           </div>
+          <button className="lien reinit" onClick={() => { try { localStorage.removeItem(CLE_SAUVEGARDE); } catch { /* rien à effacer */ } window.location.reload(); }}>
+            Repartir de zéro (efface la sauvegarde de cet appareil)
+          </button>
         </main>
       )}
 
@@ -667,6 +692,7 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .lien{background:none;border:none;color:var(--vertF);font-family:inherit;font-weight:600;font-size:14px;
   cursor:pointer;text-decoration:underline;padding:4px}
 .retour{align-self:flex-start;margin-bottom:-6px}
+.reinit{display:block;margin:18px auto 0;color:#9AA294;font-size:12px}
 .bilan{padding:20px 24px}
 .bilanTxt h1{margin-bottom:6px;font-size:20px}
 .bilanTxt p{font-family:'Space Mono',monospace;font-weight:700;font-size:16px}
