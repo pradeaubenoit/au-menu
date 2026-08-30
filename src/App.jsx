@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import dataIng from "./data/ingredients.json";
 import dataRec from "./data/recettes.json";
+import dataMaison from "./data/produits-maison.json";
 
 /* ============================================================
    AU MENU — v3 (quiz → menus midi/soir → recettes → cuisine → courses)
@@ -24,6 +25,10 @@ const RECETTES = dataRec.recettes.map((r) => ({
   id: r.id, nom: r.nom, famille: r.famille, temps: r.tempsMinutes, saisons: r.saisons, tags: r.tags,
   etapes: r.etapes || [],
   ing: r.ingredients.map((x) => [x.ingredientId, x.qteParPortion]),
+}));
+
+const PRODUITS_MAISON = dataMaison.produits.map((p) => ({
+  id: p.id, nom: p.nom, cat: p.categorie, cond: p.conditionnement, prix: p.prixBase, duree: p.dureeSemaines,
 }));
 
 const RAYONS = ["Fruits & légumes", "Boucherie & poisson", "Crèmerie", "Épicerie"];
@@ -190,6 +195,13 @@ export default function App() {
   const [gardeIds, setGardeIds] = useState([]);
   const [detail, setDetail] = useState(null);       // index du repas ouvert
   const [etapeCuisine, setEtapeCuisine] = useState(0);
+  const [maisonEntretien, setMaisonEntretien] = useState(false);
+  const [maisonHygiene, setMaisonHygiene] = useState(false);
+  const [nbChiens, setNbChiens] = useState(0);
+  const [nbChats, setNbChats] = useState(0);
+  const [nbLapins, setNbLapins] = useState(0);
+  const [nbTortues, setNbTortues] = useState(0);
+  const [cochesMaison, setCochesMaison] = useState({});
 
   const portionsSoir = adultes + petits * 0.3 + moyens * 0.6 + ados * 1.1;
   const portionsMidi = aMidi + pMidi * 0.3 + mMidi * 0.6 + adMidi * 1.1;
@@ -263,6 +275,26 @@ export default function App() {
   const lancerCuisine = () => { setEtapeCuisine(0); setEcran("cuisine"); };
 
   const groupes = useMemo(() => listeCourses(menu, slots, mag), [menu, slots, mag]);
+
+  // Caddie maison : produits concernés, prix du paquet, coût hebdo lissé selon le foyer
+  const produitsActifs = useMemo(() => {
+    const mult = (cat) => {
+      if (cat === "entretien") return maisonEntretien ? Math.max(1, bouches) / 4 : 0;
+      if (cat === "hygiene") return maisonHygiene ? Math.max(1, bouches) / 4 : 0;
+      if (cat === "chien") return nbChiens;
+      if (cat === "chat") return nbChats;
+      if (cat === "lapin") return nbLapins;
+      if (cat === "tortue") return nbTortues;
+      return 0;
+    };
+    return PRODUITS_MAISON
+      .map((p) => ({ ...p, mult: mult(p.cat) }))
+      .filter((p) => p.mult > 0)
+      .map((p) => ({ ...p, prixPaquet: p.prix * mag.coef, coutHebdo: (p.prix * mag.coef / p.duree) * p.mult }));
+  }, [maisonEntretien, maisonHygiene, nbChiens, nbChats, nbLapins, nbTortues, mag, bouches]);
+  const coutMaisonHebdo = produitsActifs.reduce((s, p) => s + p.coutHebdo, 0);
+  const totalNourriture = groupes.reduce((s, g) => s + g.items.reduce((x, i) => x + i.prix, 0), 0);
+  const totalPanier = totalNourriture + produitsActifs.filter((p) => cochesMaison[p.id]).reduce((s, p) => s + p.prixPaquet, 0);
 
   const ETAPES = [
     {
@@ -339,6 +371,26 @@ export default function App() {
         </div>
       ),
     },
+    {
+      titre: "Et le reste du caddie ?",
+      corps: (
+        <div className="rangs">
+          <div className="puces">
+            <button className={"puce" + (maisonEntretien ? " on" : "")} onClick={() => setMaisonEntretien(!maisonEntretien)}>
+              {maisonEntretien ? "✓ " : ""}Produits d'entretien
+            </button>
+            <button className={"puce" + (maisonHygiene ? " on" : "")} onClick={() => setMaisonHygiene(!maisonHygiene)}>
+              {maisonHygiene ? "✓ " : ""}Hygiène
+            </button>
+          </div>
+          <div className="rang"><span>Chiens</span><Stepper value={nbChiens} onChange={setNbChiens} min={0} max={6} /></div>
+          <div className="rang"><span>Chats</span><Stepper value={nbChats} onChange={setNbChats} min={0} max={6} /></div>
+          <div className="rang"><span>Lapins</span><Stepper value={nbLapins} onChange={setNbLapins} min={0} max={6} /></div>
+          <div className="rang"><span>Tortues</span><Stepper value={nbTortues} onChange={setNbTortues} min={0} max={6} /></div>
+          <p className="note">Ces produits ne s'achètent pas chaque semaine : leur coût est lissé pour estimer le caddie complet, et ils sont proposés en fin de liste de courses, à cocher quand c'est le moment de racheter.</p>
+        </div>
+      ),
+    },
   ];
 
   const derniere = etape === ETAPES.length - 1;
@@ -387,6 +439,9 @@ export default function App() {
               <span>🍗 {menu.filter((r) => r.famille === "volaille").length} volaille</span>
               <span>🥩 {menu.filter((r) => r.famille === "bœuf" || r.famille === "porc").length} viande rouge</span>
             </div>
+            {coutMaisonHebdo > 0 && (
+              <p className="maisonLigne">🧺 + maison & animaux ≈ {eur(coutMaisonHebdo)}/sem → caddie complet ≈ {eur(total + coutMaisonHebdo)}</p>
+            )}
             <p className="note">Touchez un plat pour voir sa recette, ou son ♥ pour le reconduire la semaine prochaine.</p>
           </section>
 
@@ -524,12 +579,31 @@ export default function App() {
                 ))}
               </div>
             ))}
+            {produitsActifs.length > 0 && (
+              <div className="rayon">
+                <div className="rayonNom">— Maison & animaux · à cocher si besoin —</div>
+                {produitsActifs.map((p) => (
+                  <label key={p.id} className={"ligne" + (cochesMaison[p.id] ? "" : " estompe")}>
+                    <input type="checkbox" checked={!!cochesMaison[p.id]}
+                      onChange={() => setCochesMaison({ ...cochesMaison, [p.id]: !cochesMaison[p.id] })} />
+                    <span className="qte">{p.cond}</span>
+                    <span className="nomI">{p.nom}</span>
+                    <span className="prixI">{eur(p.prixPaquet)}</span>
+                  </label>
+                ))}
+              </div>
+            )}
             <div className="ticketTotal">
-              <span>TOTAL PANIER</span><span>{eur(groupes.reduce((s, g) => s + g.items.reduce((x, i) => x + i.prix, 0), 0))}</span>
+              <span>TOTAL PANIER</span><span>{eur(totalPanier)}</span>
             </div>
             <div className="ticketSous">
               <span>dont utilisé pour ces {menu.length} repas</span><span>{eur(total)}</span>
             </div>
+            {coutMaisonHebdo > 0 && (
+              <div className="ticketSous">
+                <span>maison & animaux, coût lissé</span><span>≈ {eur(coutMaisonHebdo)}/sem</span>
+              </div>
+            )}
             <p className="ticketNote">Le reste des paquets entamés garnit vos placards pour les semaines suivantes. Prix relevés quand disponibles, sinon estimation (coef. {mag.nom} {mag.coef.toLocaleString("fr-FR")}).</p>
           </section>
           <div className="actions colonne">
@@ -654,6 +728,8 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .ligne input{accent-color:var(--vertF);width:16px;height:16px;flex:none}
 .qte{color:#6B7365;min-width:88px;flex:none}
 .besoin{font-style:normal;font-size:11px;color:#9AA294}
+.maisonLigne{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;margin-top:10px}
+.estompe .qte,.estompe .nomI,.estompe .prixI{opacity:.5}
 .ticketSous{display:flex;justify-content:space-between;font-size:12px;color:#6B7365;margin-top:4px}
 .nomI{flex:1}
 .prixI{font-weight:700}

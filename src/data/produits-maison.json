@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "version": 1,
+    "description": "Produits non alimentaires du caddie. prixBase en € par conditionnement. dureeSemaines : durée d'usage typique — pour un foyer de 4 personnes (entretien, hygiène) ou pour 1 animal (chien, chat, lapin, tortue). L'appli ajuste selon la composition réelle du foyer.",
+    "categories": ["entretien", "hygiene", "chien", "chat", "lapin", "tortue"]
+  },
+  "produits": [
+    { "id": "lessive", "nom": "Lessive liquide", "categorie": "entretien", "conditionnement": "bidon 1,8 L", "prixBase": 7.5, "dureeSemaines": 5 },
+    { "id": "tablettes-lv", "nom": "Tablettes lave-vaisselle", "categorie": "entretien", "conditionnement": "boîte de 40", "prixBase": 8.0, "dureeSemaines": 6 },
+    { "id": "liquide-vaisselle", "nom": "Liquide vaisselle", "categorie": "entretien", "conditionnement": "flacon 500 ml", "prixBase": 1.8, "dureeSemaines": 4 },
+    { "id": "eponges", "nom": "Éponges", "categorie": "entretien", "conditionnement": "lot de 3", "prixBase": 1.5, "dureeSemaines": 6 },
+    { "id": "essuie-tout", "nom": "Essuie-tout", "categorie": "entretien", "conditionnement": "lot de 6 rouleaux", "prixBase": 4.0, "dureeSemaines": 4 },
+    { "id": "papier-toilette", "nom": "Papier toilette", "categorie": "entretien", "conditionnement": "lot de 12 rouleaux", "prixBase": 6.0, "dureeSemaines": 4 },
+    { "id": "multi-usage", "nom": "Nettoyant multi-usage", "categorie": "entretien", "conditionnement": "spray 1 L", "prixBase": 2.5, "dureeSemaines": 6 },
+    { "id": "sacs-poubelle", "nom": "Sacs poubelle 30 L", "categorie": "entretien", "conditionnement": "rouleau de 30", "prixBase": 3.0, "dureeSemaines": 5 },
+    { "id": "gel-douche", "nom": "Gel douche", "categorie": "hygiene", "conditionnement": "flacon 750 ml", "prixBase": 3.0, "dureeSemaines": 3 },
+    { "id": "shampoing", "nom": "Shampoing", "categorie": "hygiene", "conditionnement": "flacon 500 ml", "prixBase": 3.5, "dureeSemaines": 4 },
+    { "id": "dentifrice", "nom": "Dentifrice", "categorie": "hygiene", "conditionnement": "lot de 2 tubes", "prixBase": 3.0, "dureeSemaines": 5 },
+    { "id": "savon-mains", "nom": "Savon mains", "categorie": "hygiene", "conditionnement": "recharge 500 ml", "prixBase": 2.5, "dureeSemaines": 5 },
+    { "id": "deodorant", "nom": "Déodorant", "categorie": "hygiene", "conditionnement": "l'unité", "prixBase": 2.8, "dureeSemaines": 6 },
+    { "id": "mouchoirs", "nom": "Mouchoirs", "categorie": "hygiene", "conditionnement": "lot de 12 étuis", "prixBase": 2.5, "dureeSemaines": 6 },
+    { "id": "croquettes-chien", "nom": "Croquettes petit chien", "categorie": "chien", "conditionnement": "sac 3 kg", "prixBase": 14.0, "dureeSemaines": 5 },
+    { "id": "friandises-chien", "nom": "Friandises chien", "categorie": "chien", "conditionnement": "sachet", "prixBase": 3.0, "dureeSemaines": 3 },
+    { "id": "sacs-dejections", "nom": "Sacs à déjections", "categorie": "chien", "conditionnement": "lot de 120", "prixBase": 3.0, "dureeSemaines": 8 },
+    { "id": "croquettes-chat", "nom": "Croquettes chat", "categorie": "chat", "conditionnement": "sac 2 kg", "prixBase": 9.0, "dureeSemaines": 4 },
+    { "id": "litiere-chat", "nom": "Litière chat", "categorie": "chat", "conditionnement": "sac 10 L", "prixBase": 6.0, "dureeSemaines": 3 },
+    { "id": "sachets-chat", "nom": "Sachets fraîcheur chat", "categorie": "chat", "conditionnement": "lot de 12", "prixBase": 6.5, "dureeSemaines": 2 },
+    { "id": "foin-lapin", "nom": "Foin", "categorie": "lapin", "conditionnement": "sac 1 kg", "prixBase": 4.0, "dureeSemaines": 3 },
+    { "id": "granules-lapin", "nom": "Granulés lapin", "categorie": "lapin", "conditionnement": "sac 1,5 kg", "prixBase": 5.0, "dureeSemaines": 5 },
+    { "id": "litiere-lapin", "nom": "Litière copeaux", "categorie": "lapin", "conditionnement": "sac 20 L", "prixBase": 5.0, "dureeSemaines": 4 },
+    { "id": "alimentation-tortue", "nom": "Alimentation tortues", "categorie": "tortue", "conditionnement": "boîte 250 g", "prixBase": 6.0, "dureeSemaines": 6 }
+  ],
+  "prixEnseignes": []
+}
