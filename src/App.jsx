@@ -203,6 +203,8 @@ export default function App() {
   const [emailSaisi, setEmailSaisi] = useState("");
   const [lienEnvoye, setLienEnvoye] = useState(false);
   const [erreurConnexion, setErreurConnexion] = useState("");
+  const [codeSaisi, setCodeSaisi] = useState("");
+  const [verification, setVerification] = useState(false);
   // Semaine actuellement consultée (lundi ISO) + chargement depuis la base
   const [dateLundi, setDateLundi] = useState(() => lundiDe(new Date()));
   const [chargementSemaine, setChargementSemaine] = useState(false);
@@ -347,6 +349,17 @@ export default function App() {
     });
     if (error) setErreurConnexion("Envoi impossible : " + error.message);
     else setLienEnvoye(true);
+  };
+
+  // Connexion par le code à 6 chiffres reçu par email (fonctionne aussi dans l'icône iPhone)
+  const validerCode = async () => {
+    setErreurConnexion("");
+    const code = codeSaisi.replace(/\s+/g, "");
+    if (code.length < 6) { setErreurConnexion("Le code comporte 6 chiffres."); return; }
+    setVerification(true);
+    const { error } = await supabase.auth.verifyOtp({ email: emailSaisi.trim(), token: code, type: "email" });
+    setVerification(false);
+    if (error) setErreurConnexion("Code refusé : " + error.message + " — vérifiez les chiffres, ou redemandez un code.");
   };
 
   // Mode cuisine : garder l'écran allumé (si le navigateur le permet)
@@ -545,9 +558,17 @@ export default function App() {
             </div>
           ) : (
             <div className="rangs">
-              <p>📬 Lien envoyé à <strong>{emailSaisi.trim()}</strong>.</p>
-              <p className="note">Ouvrez l'email (pensez aux indésirables) et touchez le lien : vous reviendrez ici, connecté. L'envoi peut prendre une minute, et le nombre d'emails par heure est limité — patience avant de redemander.</p>
-              <button className="lien" onClick={() => setLienEnvoye(false)}>Modifier l'adresse</button>
+              <p>📬 Email envoyé à <strong>{emailSaisi.trim()}</strong>.</p>
+              <p className="note">Ouvrez l'email (pensez aux indésirables) et recopiez ici le <strong>code à 6 chiffres</strong> qu'il contient.</p>
+              <input className="champEmail champCode" type="text" inputMode="numeric" autoComplete="one-time-code"
+                placeholder="123456" maxLength={8} value={codeSaisi}
+                onChange={(e) => setCodeSaisi(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && validerCode()} />
+              {erreurConnexion && <p className="erreur">{erreurConnexion}</p>}
+              <div className="actions">
+                <button className="prim" disabled={verification} onClick={validerCode}>{verification ? "Vérification…" : "Valider le code"}</button>
+              </div>
+              <button className="lien" onClick={() => { setLienEnvoye(false); setCodeSaisi(""); setErreurConnexion(""); }}>Modifier l'adresse ou redemander un code</button>
             </div>
           )}
         </main>
@@ -859,6 +880,7 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .connexion h1{margin-bottom:8px}
 .champEmail{padding:14px;border:1.5px solid var(--ligne);border-radius:12px;font-family:inherit;font-size:16px;width:100%}
 .erreur{color:var(--rouge);font-size:13px;font-weight:600}
+.champCode{font-family:'Space Mono',monospace;font-size:26px;letter-spacing:6px;text-align:center}
 .semNav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:2px}
 .semBtn{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--ligne);background:#fff;cursor:pointer;font-size:14px}
 .semLibelle{font-weight:800;font-size:16px}
