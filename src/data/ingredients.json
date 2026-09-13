@@ -1229,6 +1229,202 @@
         "gluc": 20,
         "fib": 2.6
       }
+    },
+    {
+      "id": "cote-de-boeuf",
+      "nom": "Côte de bœuf",
+      "unite": "kg",
+      "rayon": "Boucherie & poisson",
+      "prixBase": 26.0,
+      "nutrition": {
+        "kcal": 250,
+        "prot": 26,
+        "lip": 16,
+        "gluc": 0,
+        "fib": 0
+      }
+    },
+    {
+      "id": "lotte",
+      "nom": "Queue de lotte",
+      "unite": "kg",
+      "rayon": "Boucherie & poisson",
+      "prixBase": 32.0,
+      "nutrition": {
+        "kcal": 90,
+        "prot": 17,
+        "lip": 1,
+        "gluc": 0,
+        "fib": 0
+      }
+    },
+    {
+      "id": "magret-canard",
+      "nom": "Magret de canard",
+      "unite": "kg",
+      "rayon": "Boucherie & poisson",
+      "prixBase": 18.0,
+      "nutrition": {
+        "kcal": 200,
+        "prot": 19,
+        "lip": 13,
+        "gluc": 0,
+        "fib": 0
+      }
+    },
+    {
+      "id": "gambas",
+      "nom": "Gambas",
+      "unite": "kg",
+      "rayon": "Boucherie & poisson",
+      "prixBase": 25.0,
+      "nutrition": {
+        "kcal": 90,
+        "prot": 18,
+        "lip": 1,
+        "gluc": 1,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.4,
+        "libelle": "sachet 400 g"
+      }
+    },
+    {
+      "id": "moules",
+      "nom": "Moules de bouchot",
+      "unite": "kg",
+      "rayon": "Boucherie & poisson",
+      "prixBase": 5.0,
+      "nutrition": {
+        "kcal": 80,
+        "prot": 12,
+        "lip": 2,
+        "gluc": 3,
+        "fib": 0
+      }
+    },
+    {
+      "id": "fromage-raclette",
+      "nom": "Fromage à raclette",
+      "unite": "kg",
+      "rayon": "Crèmerie",
+      "prixBase": 15.0,
+      "nutrition": {
+        "kcal": 360,
+        "prot": 23,
+        "lip": 29,
+        "gluc": 1,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.4,
+        "libelle": "plateau 400 g"
+      }
+    },
+    {
+      "id": "charcuterie-raclette",
+      "nom": "Assiette de charcuterie",
+      "unite": "kg",
+      "rayon": "Boucherie & poisson",
+      "prixBase": 18.0,
+      "nutrition": {
+        "kcal": 320,
+        "prot": 20,
+        "lip": 26,
+        "gluc": 1,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 0.28,
+        "libelle": "assiette 280 g"
+      }
+    },
+    {
+      "id": "reblochon",
+      "nom": "Reblochon",
+      "unite": "pc",
+      "rayon": "Crèmerie",
+      "prixBase": 4.5,
+      "nutrition": {
+        "kcal": 1490,
+        "prot": 92,
+        "lip": 122,
+        "gluc": 0,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "reblochon 450 g"
+      }
+    },
+    {
+      "id": "camembert",
+      "nom": "Camembert",
+      "unite": "pc",
+      "rayon": "Crèmerie",
+      "prixBase": 2.9,
+      "nutrition": {
+        "kcal": 750,
+        "prot": 52,
+        "lip": 58,
+        "gluc": 1,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "boîte 250 g"
+      }
+    },
+    {
+      "id": "pommes-grenaille",
+      "nom": "Pommes de terre grenaille",
+      "unite": "kg",
+      "rayon": "Fruits & légumes",
+      "prixBase": 2.5,
+      "nutrition": {
+        "kcal": 80,
+        "prot": 2,
+        "lip": 0.1,
+        "gluc": 17,
+        "fib": 2
+      }
+    },
+    {
+      "id": "frites-surgelees",
+      "nom": "Frites surgelées",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 2.2,
+      "nutrition": {
+        "kcal": 160,
+        "prot": 2,
+        "lip": 5,
+        "gluc": 25,
+        "fib": 2
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "sachet 1 kg"
+      }
+    },
+    {
+      "id": "pains-burger",
+      "nom": "Pains burger",
+      "unite": "pc",
+      "rayon": "Épicerie",
+      "prixBase": 0.55,
+      "nutrition": {
+        "kcal": 230,
+        "prot": 8,
+        "lip": 4,
+        "gluc": 40,
+        "fib": 2
+      },
+      "conditionnement": {
+        "qte": 4,
+        "libelle": "lot de 4"
+      }
     }
   ],
   "prixEnseignes": []

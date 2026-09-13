@@ -2335,6 +2335,384 @@
           "qteParPortion": 0.06
         }
       ]
+    },
+    {
+      "id": 61,
+      "nom": "Côte de bœuf, frites & salade",
+      "famille": "bœuf",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Sortir la côte 30 min avant ; préchauffer le four à 220 °C pour les frites.",
+        "Enfourner les frites 20 min en les retournant à mi-cuisson.",
+        "Saisir la côte 3 min par face à feu vif, poivrer généreusement.",
+        "Finir 6 min au four selon l'épaisseur, laisser reposer 5 min sous une feuille d'aluminium.",
+        "Trancher à table et servir avec la salade assaisonnée."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "cote-de-boeuf",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "frites-surgelees",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.005
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "nom": "Lotte à l'armoricaine, riz",
+      "famille": "poisson",
+      "tempsMinutes": 40,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Faire revenir l'oignon émincé 3 min dans un peu de beurre.",
+        "Ajouter les tomates concassées, laisser mijoter 10 min.",
+        "Tailler la lotte en médaillons, les pocher 8 min dans la sauce.",
+        "Incorporer la crème, rectifier l'assaisonnement.",
+        "Servir sur le riz nature."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "lotte",
+          "qteParPortion": 0.18
+        },
+        {
+          "ingredientId": "tomates-concassees",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.03
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.07
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "nom": "Magret de canard, grenaille rôtie",
+      "famille": "volaille",
+      "tempsMinutes": 35,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C ; rôtir les grenailles 25 min avec un filet d'huile.",
+        "Quadriller la peau du magret au couteau.",
+        "Cuire côté peau 8 min à feu moyen en vidant la graisse, puis 4 min côté chair.",
+        "Laisser reposer 5 min, trancher en biais.",
+        "Servir avec les grenailles et les haricots verts."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "magret-canard",
+          "qteParPortion": 0.18
+        },
+        {
+          "ingredientId": "pommes-grenaille",
+          "qteParPortion": 0.25
+        },
+        {
+          "ingredientId": "haricots-verts",
+          "qteParPortion": 0.1
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "nom": "Gambas sautées à l'ail, riz",
+      "famille": "poisson",
+      "tempsMinutes": 25,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Cuire le riz.",
+        "Chauffer beurre et ail émincé 1 min sans colorer.",
+        "Saisir les gambas 2 à 3 min par face jusqu'à ce qu'elles rosissent.",
+        "Déglacer d'un trait de jus de citron si vous en avez, poivrer.",
+        "Servir aussitôt sur le riz."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "gambas",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "riz",
+          "qteParPortion": 0.08
+        },
+        {
+          "ingredientId": "ail",
+          "qteParPortion": 0.008
+        },
+        {
+          "ingredientId": "beurre",
+          "qteParPortion": 0.01
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "nom": "Raclette conviviale",
+      "famille": "porc",
+      "tempsMinutes": 25,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Cuire les pommes de terre en robe 20 min à l'eau salée.",
+        "Dresser fromage et charcuterie sur des plats.",
+        "Lancer l'appareil à raclette et laisser chacun faire fondre à son rythme.",
+        "Cornichons et oignons au vinaigre en accompagnement si le cœur vous en dit."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "fromage-raclette",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "charcuterie-raclette",
+          "qteParPortion": 0.1
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.35
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "nom": "Camembert rôti, pommes de terre & salade",
+      "famille": "végé",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C ; cuire les pommes de terre en quartiers 25 min.",
+        "Entailler le camembert en croisillons dans sa boîte (sans le plastique).",
+        "Enfourner le camembert 12 min, jusqu'au cœur coulant.",
+        "Servir aussitôt : chacun trempe pommes de terre et pain, salade à côté."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "camembert",
+          "qteParPortion": 0.5
+        },
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.15
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "nom": "Burgers maison & frites",
+      "famille": "bœuf",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Enfourner les frites à 220 °C, 20 min.",
+        "Façonner les steaks, les cuire 3 min par face, couvrir de fromage en fin de cuisson.",
+        "Toaster les pains 2 min.",
+        "Monter : sauce au choix, salade, oignon émincé, steak.",
+        "Servir avec les frites."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pains-burger",
+          "qteParPortion": 1
+        },
+        {
+          "ingredientId": "steaks-haches",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "emmental-rape",
+          "qteParPortion": 0.02
+        },
+        {
+          "ingredientId": "salade-verte",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "frites-surgelees",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "nom": "Fajitas de poulet à partager",
+      "famille": "volaille",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Émincer poulet, poivrons et oignons.",
+        "Saisir le poulet 5 min à feu vif, réserver.",
+        "Faire revenir poivrons et oignons 6 min, remettre le poulet, assaisonner (paprika, cumin si vous avez).",
+        "Tiédir les tortillas.",
+        "Servir au centre de la table : chacun garnit, crème en touche finale."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "tortillas",
+          "qteParPortion": 2
+        },
+        {
+          "ingredientId": "filet-poulet",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "poivrons",
+          "qteParPortion": 0.15
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.03
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "nom": "Moules marinières & frites",
+      "famille": "poisson",
+      "tempsMinutes": 30,
+      "saisons": [
+        "toutes"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Enfourner les frites à 220 °C, 20 min.",
+        "Gratter et rincer les moules, jeter celles qui restent ouvertes.",
+        "Suer l'oignon émincé dans une grande marmite.",
+        "Ajouter les moules et un demi-verre d'eau, couvrir, 5 à 7 min en secouant — elles doivent toutes s'ouvrir.",
+        "Lier d'une cuillère de crème et servir avec les frites."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "moules",
+          "qteParPortion": 0.6
+        },
+        {
+          "ingredientId": "frites-surgelees",
+          "qteParPortion": 0.2
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.04
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.02
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "nom": "Tartiflette généreuse",
+      "famille": "porc",
+      "tempsMinutes": 50,
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "festif"
+      ],
+      "etapes": [
+        "Cuire les pommes de terre 15 min à l'eau, les trancher.",
+        "Faire revenir lardons et oignons 5 min.",
+        "Monter dans un plat : pommes de terre, lardons-oignons, crème.",
+        "Couvrir du reblochon coupé en deux dans l'épaisseur, croûte vers le haut.",
+        "Cuire 25 min à 200 °C, jusqu'à belle dorure."
+      ],
+      "ingredients": [
+        {
+          "ingredientId": "pommes-de-terre",
+          "qteParPortion": 0.3
+        },
+        {
+          "ingredientId": "reblochon",
+          "qteParPortion": 0.45
+        },
+        {
+          "ingredientId": "lardons",
+          "qteParPortion": 0.06
+        },
+        {
+          "ingredientId": "oignons",
+          "qteParPortion": 0.05
+        },
+        {
+          "ingredientId": "creme-fraiche",
+          "qteParPortion": 0.02
+        }
+      ]
     }
   ]
 }

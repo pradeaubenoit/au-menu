@@ -113,6 +113,7 @@ const dureeEtape = (texte) => {
 
 function recettesEligibles(regime, sansPoisson) {
   return RECETTES.filter((r) => {
+    if (r.tags && r.tags.includes("festif")) return false; // réservées aux repas plaisir
     if (regime === "vege" && r.famille !== "végé") return false;
     if (regime === "sansporc" && r.famille === "porc") return false;
     if (sansPoisson && r.famille === "poisson") return false;
@@ -268,6 +269,8 @@ export default function App() {
   const [nbTortues, setNbTortues] = useState(SAUV.nbTortues ?? 0);
   const [nbJoursPdej, setNbJoursPdej] = useState(SAUV.nbJoursPdej ?? 0);
   const [nbJoursGouter, setNbJoursGouter] = useState(SAUV.nbJoursGouter ?? 0);
+  // Repas plaisir : créneaux marqués ✨, avec invités éventuels — budget à part
+  const [festifs, setFestifs] = useState(Array.isArray(SAUV.festifs) ? SAUV.festifs : []);
   const [cochesMaison, setCochesMaison] = useState({});
 
   const portionsSoir = adultes + petits * 0.3 + moyens * 0.6 + ados * 1.1;
@@ -280,8 +283,11 @@ export default function App() {
       if (d < nbMidis) s.push({ jour: JOURS[d], type: "midi", portions: portionsMidi });
       if (d < nbSoirs) s.push({ jour: JOURS[d], type: "soir", portions: portionsSoir });
     }
-    return s;
-  }, [nbMidis, nbSoirs, portionsMidi, portionsSoir]);
+    return s.map((sl) => {
+      const f = festifs.find((x) => x.cle === sl.jour + "|" + sl.type);
+      return f ? { ...sl, portions: sl.portions + f.invA + 0.6 * f.invE, festif: true } : sl;
+    });
+  }, [nbMidis, nbSoirs, portionsMidi, portionsSoir, festifs]);
 
   const mag = MAGASINS.find((m) => m.id === magActif);
   const magSel = MAGASINS.filter((m) => magasins.includes(m.id));
@@ -295,11 +301,17 @@ export default function App() {
 
   const coutPlat = (r, i) => coutParPersonne(r, mag) * slots[i].portions;
   const total = menu.reduce((s, r, i) => s + coutPlat(r, i), 0);
+  const coutFestifTotal = menu.reduce((s, r, i) => s + (slots[i] && slots[i].festif ? coutPlat(r, i) : 0), 0);
+  const totalHorsFete = total - coutFestifTotal;
   const eligibles = useMemo(() => recettesEligibles(regime, sansPoisson), [regime, sansPoisson]);
+  const festifPool = useMemo(() => RECETTES.filter((r) => r.tags && r.tags.includes("festif")
+    && (regime !== "vege" || r.famille === "végé")
+    && (regime !== "sansporc" || r.famille !== "porc")
+    && (!sansPoisson || r.famille !== "poisson")), [regime, sansPoisson]);
 
   const reponsesActuelles = () => ({ adultes, petits, moyens, ados, nbMidis, nbSoirs, aMidi, pMidi, mMidi, adMidi,
     budget, regime, sansPoisson, magasins, magActif, maisonEntretien, maisonHygiene,
-    nbChiens, nbChats, nbLapins, nbTortues, nbJoursPdej, nbJoursGouter });
+    nbChiens, nbChats, nbLapins, nbTortues, nbJoursPdej, nbJoursGouter, festifs });
 
   // Réponses du quiz mémorisées sur l'appareil (pré-remplissage)
   useEffect(() => {
@@ -326,6 +338,7 @@ export default function App() {
     setMaisonEntretien(r.maisonEntretien ?? false); setMaisonHygiene(r.maisonHygiene ?? false);
     setNbChiens(r.nbChiens ?? 0); setNbChats(r.nbChats ?? 0); setNbLapins(r.nbLapins ?? 0); setNbTortues(r.nbTortues ?? 0);
     setNbJoursPdej(r.nbJoursPdej ?? 0); setNbJoursGouter(r.nbJoursGouter ?? 0);
+    setFestifs(Array.isArray(r.festifs) ? r.festifs : []);
   };
 
   // Charger la semaine consultée depuis la base
@@ -414,7 +427,7 @@ export default function App() {
     if (!slots.length) return;
     const moinsCher = [...magSel].sort((a, b) => a.coef - b.coef)[0];
     setMagActif(moinsCher.id);
-    setMenu(composerMenu(eligibles, slots, enveloppeRepas, moinsCher));
+    setMenu(poserFestifs(composerMenu(eligibles, slots, enveloppeRepas, moinsCher)));
     setGardeIds([]);
     setCoches({});
     setEcran("menu");
@@ -428,18 +441,53 @@ export default function App() {
     const gardes = toutChanger ? [] : menu.filter((r, i, a) => gardeIds.includes(r.id) && a.findIndex((x) => x.id === r.id) === i);
     const eviter = menu.map((r) => r.id).filter((id) => toutChanger || !gardeIds.includes(id));
     setMagActif(moinsCher.id);
-    setMenu(composerMenu(eligibles, slots, enveloppeRepas, moinsCher, { gardes, eviter }));
+    setMenu(poserFestifs(composerMenu(eligibles, slots, enveloppeRepas, moinsCher, { gardes, eviter })));
     if (toutChanger) setGardeIds([]);
     setCoches({});
   };
 
   const remplacer = (i) => {
-    let dispo = eligibles.filter((r) => !menu.some((m) => m.id === r.id));
-    if (!dispo.length) dispo = eligibles.filter((r) => r.id !== menu[i].id);
+    const source = slots[i] && slots[i].festif ? festifPool : eligibles;
+    let dispo = source.filter((r) => !menu.some((m) => m.id === r.id));
+    if (!dispo.length) dispo = source.filter((r) => r.id !== menu[i].id);
     if (!dispo.length) return;
     const copie = [...menu];
     copie[i] = shuffle(dispo)[0];
     setMenu(copie); setCoches({});
+  };
+
+  // Place un plat festif sur chaque créneau ✨ (sans toucher aux plats festifs gardés)
+  const poserFestifs = (base) => {
+    if (!festifPool.length) return base;
+    const copie = [...base];
+    let dispo = shuffle(festifPool.filter((r) => !copie.some((m) => m && m.id === r.id)));
+    slots.forEach((sl, i) => {
+      if (!sl.festif || !copie[i]) return;
+      if (copie[i].tags && copie[i].tags.includes("festif")) return;
+      copie[i] = dispo.pop() || copie[i];
+    });
+    return copie;
+  };
+
+  const toggleFestif = (i) => {
+    const cle = slots[i].jour + "|" + slots[i].type;
+    const copie = [...menu];
+    if (festifs.some((f) => f.cle === cle)) {
+      setFestifs(festifs.filter((f) => f.cle !== cle));
+      const dispo = shuffle(eligibles.filter((r) => !menu.some((m) => m.id === r.id)));
+      if (dispo.length) copie[i] = dispo[0];
+    } else {
+      setFestifs([...festifs, { cle, invA: 0, invE: 0 }]);
+      const dispo = shuffle(festifPool.filter((r) => !menu.some((m) => m.id === r.id)));
+      if (dispo.length) copie[i] = dispo[0];
+    }
+    setMenu(copie); setCoches({});
+  };
+
+  const majInvites = (i, champ, delta) => {
+    const cle = slots[i].jour + "|" + slots[i].type;
+    setFestifs(festifs.map((f) => f.cle === cle
+      ? { ...f, [champ]: Math.max(0, Math.min(12, (f[champ] || 0) + delta)) } : f));
   };
 
   const ouvrirRecette = (i) => { setDetail(i); setEcran("recette"); };
@@ -458,7 +506,7 @@ export default function App() {
       const dejaIds = conserves.filter(Boolean).map((r) => r.id);
       const dispo = shuffle(eligibles.filter((r) => !dejaIds.includes(r.id)));
       const complet = conserves.map((r) => r || dispo.pop() || shuffle(eligibles)[0]).filter(Boolean);
-      setMenu(complet.length === slots.length ? complet : []);
+      setMenu(complet.length === slots.length ? poserFestifs(complet) : []);
     }
     setEcran("menu");
   };
@@ -497,27 +545,28 @@ export default function App() {
   const totalPanier = totalNourriture + produitsActifs.filter((p) => cochesMaison[p.id]).reduce((s, p) => s + p.prixPaquet, 0);
 
   // Le budget saisi est celui du CADDIE : repas + petits déj/goûters + maison
-  const caddieTotal = total + coutConso + coutMaisonHebdo;
+  const caddieTotal = totalHorsFete + coutConso + coutMaisonHebdo;
   const enveloppeRepas = Math.max(15, budget - coutConso - coutMaisonHebdo);
   const caddieChez = (m) => totalChez(m)
+    - menu.reduce((s2, r, i) => s2 + (slots[i] && slots[i].festif ? coutParPersonne(r, m) * slots[i].portions : 0), 0)
     + consoItems.reduce((s2, x) => s2 + x.qte * prixIngredient(x.id, m), 0)
     + produitsActifs.reduce((s2, p) => s2 + (p.prix * m.coef / p.duree) * p.mult, 0);
   const meilleureEnseigne = magSel.length > 1
     ? [...magSel].sort((m1, m2) => caddieChez(m1) - caddieChez(m2))[0] : null;
   const minParPortion = eligibles.length ? Math.min(...eligibles.map((r) => coutParPersonne(r, mag))) : 0;
-  const caddieMinimum = slots.reduce((s2, sl) => s2 + minParPortion * sl.portions, 0) + coutConso + coutMaisonHebdo;
+  const caddieMinimum = slots.reduce((s2, sl) => sl.festif ? s2 : s2 + minParPortion * sl.portions, 0) + coutConso + coutMaisonHebdo;
 
   // Remplacer les plats les plus chers par des économiques (♥ conservés, équilibre respecté)
   const optimiser = () => {
     const copie = [...menu];
     const cout = (r, i) => coutParPersonne(r, mag) * slots[i].portions;
-    const caddie = () => copie.reduce((s2, r, i) => s2 + cout(r, i), 0) + coutConso + coutMaisonHebdo;
+    const caddie = () => copie.reduce((s2, r, i) => slots[i].festif ? s2 : s2 + cout(r, i), 0) + coutConso + coutMaisonHebdo;
     let garde = 0;
     while (caddie() > budget && garde < 80) {
       garde++;
       let iCher = -1;
       copie.forEach((r, i) => {
-        if (gardeIds.includes(r.id)) return;
+        if (gardeIds.includes(r.id) || slots[i].festif) return;
         if (iCher < 0 || cout(r, i) > cout(copie[iCher], iCher)) iCher = i;
       });
       if (iCher < 0) break;
@@ -785,7 +834,8 @@ export default function App() {
               <span>🥩 {menu.filter((r) => r.famille === "bœuf" || r.famille === "porc").length} viande rouge</span>
             </div>
             <p className="maisonLigne">
-              🍽 repas : {eur(total)}
+              🍽 repas : {eur(totalHorsFete)}
+              {coutFestifTotal > 0 && <><br />✨ soirée plaisir : {eur(coutFestifTotal)} — budget à part</>}
               {coutConso > 0 && <><br />🥐 petits déj & goûters ≈ {eur(coutConso)}/sem</>}
               {coutMaisonHebdo > 0 && <><br />🧺 maison & animaux ≈ {eur(coutMaisonHebdo)}/sem</>}
             </p>
@@ -830,6 +880,8 @@ export default function App() {
                   <span className="jourNom">{slots[i].jour} <em className={"moment " + slots[i].type}>{slots[i].type}</em></span>
                   <span className="teteDroite">
                     <span className="cat">{r.famille}</span>
+                    <button className={"coeur etoile" + (slots[i].festif ? " on" : "")}
+                      onClick={() => toggleFestif(i)} aria-label="Repas plaisir, budget à part">✨</button>
                     <button className={"coeur" + (gardeIds.includes(r.id) ? " on" : "")}
                       onClick={() => toggleGarde(r.id)} aria-label="À refaire la semaine prochaine">♥</button>
                   </span>
@@ -838,6 +890,13 @@ export default function App() {
                   <h2>{r.nom} <span className="chevron">›</span></h2>
                   <p className="meta">{r.temps} min · ≈ {kcalParPortion(r)} kcal/portion</p>
                 </button>
+                {slots[i].festif && (() => { const f = festifs.find((x) => x.cle === slots[i].jour + "|" + slots[i].type) || { invA: 0, invE: 0 }; return (
+                  <div className="invites">
+                    <span className="invTitre">✨ Budget à part · invités :</span>
+                    <span className="invCtrl">adultes <button onClick={() => majInvites(i, "invA", -1)}>−</button><b>{f.invA}</b><button onClick={() => majInvites(i, "invA", 1)}>+</button></span>
+                    <span className="invCtrl">enfants <button onClick={() => majInvites(i, "invE", -1)}>−</button><b>{f.invE}</b><button onClick={() => majInvites(i, "invE", 1)}>+</button></span>
+                  </div>
+                ); })()}
                 <div className="jourPied">
                   <span className="tag">{eur(coutPlat(r, i))}</span>
                   <button className="lien" onClick={() => remplacer(i)}>↻ Changer de plat</button>
@@ -963,6 +1022,11 @@ export default function App() {
             <div className="ticketSous">
               <span>dont utilisé pour ces {menu.length} repas</span><span>{eur(total)}</span>
             </div>
+            {coutFestifTotal > 0 && (
+              <div className="ticketSous">
+                <span>dont soirée plaisir ✨</span><span>{eur(coutFestifTotal)}</span>
+              </div>
+            )}
             {coutConso > 0 && (
               <div className="ticketSous">
                 <span>dont petits déj & goûters</span><span>≈ {eur(coutConso)}/sem</span>
@@ -1068,6 +1132,13 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .coeur{background:none;border:1.5px solid var(--ligne);border-radius:999px;width:32px;height:32px;
   font-size:15px;color:#B9C1B3;cursor:pointer;line-height:1}
 .coeur.on{color:#fff;background:var(--rouge);border-color:var(--rouge)}
+.etoile{font-size:14px}
+.etoile.on{background:#FFCE2E;border-color:#FFCE2E;color:#20241F}
+.invites{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;background:#FFF7DE;border:1px solid #FFCE2E;border-radius:10px;padding:6px 10px;margin-top:8px}
+.invTitre{font-weight:700}
+.invCtrl{display:inline-flex;align-items:center;gap:5px}
+.invCtrl button{width:24px;height:24px;border-radius:8px;border:1.5px solid var(--ligne);background:#fff;cursor:pointer}
+.invCtrl b{min-width:14px;text-align:center}
 .jours{display:flex;flex-direction:column;gap:10px}
 .jour{background:var(--carte);border:1px solid var(--ligne);border-radius:16px;padding:16px 18px}
 .jourTete{display:flex;justify-content:space-between;align-items:center}
