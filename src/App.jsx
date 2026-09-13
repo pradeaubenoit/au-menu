@@ -33,7 +33,24 @@ const PRODUITS_MAISON = dataMaison.produits.map((p) => ({
   id: p.id, nom: p.nom, cat: p.categorie, cond: p.conditionnement, prix: p.prixBase, duree: p.dureeSemaines,
 }));
 
-const RAYONS = ["Fruits & légumes", "Boucherie & poisson", "Crèmerie", "Épicerie"];
+// Panier hebdomadaire type petit-déj / goûter, par personne et par tranche d'âge
+// (A adulte, T ado 11-17, M enfant 4-10, P enfant 0-3), pour 7 jours à la maison
+const CONSO_HEBDO = [
+  { id: "baguette", cat: "pd", A: 2.5, T: 2.5, M: 1.5, P: 0.5 },
+  { id: "beurre", cat: "pd", A: 0.06, T: 0.06, M: 0.04, P: 0.02 },
+  { id: "confiture", cat: "pd", A: 0.07, T: 0.07, M: 0.06, P: 0.03 },
+  { id: "cereales", cat: "pd", A: 0.1, T: 0.25, M: 0.2, P: 0.05 },
+  { id: "lait", cat: "pd", A: 0.5, T: 1.0, M: 0.9, P: 0.7 },
+  { id: "chocolat-poudre", cat: "pd", A: 0, T: 0.08, M: 0.08, P: 0.05 },
+  { id: "jus-orange", cat: "pd", A: 0.4, T: 0.5, M: 0.4, P: 0.2 },
+  { id: "yaourts", cat: "pd", A: 3, T: 5, M: 5, P: 4 },
+  { id: "bananes", cat: "pd", A: 0.3, T: 0.5, M: 0.4, P: 0.3 },
+  { id: "biscuits-gouter", cat: "gout", A: 0, T: 0.22, M: 0.18, P: 0.08 },
+  { id: "compotes-gourde", cat: "gout", A: 0, T: 3, M: 4, P: 4 },
+  { id: "chocolat-tablette", cat: "gout", A: 0, T: 0.1, M: 0.06, P: 0.02 },
+];
+
+const RAYONS = ["Boulangerie", "Fruits & légumes", "Boucherie & poisson", "Crèmerie", "Épicerie"];
 const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
 /* ---------- réponses du quiz mémorisées sur l'appareil (confort de saisie) ---------- */
@@ -41,6 +58,15 @@ const CLE_SAUVEGARDE = "au-menu-quiz-v2";
 const SAUV = (() => {
   try { return JSON.parse(localStorage.getItem(CLE_SAUVEGARDE)) || {}; }
   catch { return {}; }
+})();
+
+// Demande de code en cours : mémorisée pour survivre au rechargement de l'appli par iOS
+const CLE_ATTENTE = "au-menu-code-attente";
+const ATTENTE = (() => {
+  try {
+    const a = JSON.parse(localStorage.getItem(CLE_ATTENTE));
+    return a && a.email && Date.now() - a.t < 15 * 60 * 1000 ? a : null; // 15 min max
+  } catch { return null; }
 })();
 
 /* ---------- semaines datées ---------- */
@@ -147,13 +173,15 @@ function composerMenu(eligibles, slots, budget, mag, opts = {}) {
   return menu;
 }
 
-function listeCourses(menu, slots, mag) {
+function listeCourses(menu, slots, mag, extras = []) {
   const map = {};
-  menu.forEach((r, i) => { for (const [id, q] of r.ing) {
+  const ajouter = (id, qte) => {
     const ing = INGREDIENTS[id];
     if (!map[id]) map[id] = { id, nom: ing.nom, u: ing.u, rayon: ing.rayon, cond: ing.cond, besoin: 0 };
-    map[id].besoin += q * slots[i].portions;
-  } });
+    map[id].besoin += qte;
+  };
+  menu.forEach((r, i) => { for (const [id, q] of r.ing) ajouter(id, q * slots[i].portions); });
+  for (const x of extras) ajouter(x.id, x.qte); // petits déj & goûters
   const items = Object.values(map).map((it) => {
     const pu = prixIngredient(it.id, mag);
     if (it.cond) {
@@ -200,8 +228,8 @@ function Minuterie({ secondes }) {
 export default function App() {
   // Compte utilisateur (undefined = vérification en cours, null = déconnecté)
   const [session, setSession] = useState(undefined);
-  const [emailSaisi, setEmailSaisi] = useState("");
-  const [lienEnvoye, setLienEnvoye] = useState(false);
+  const [emailSaisi, setEmailSaisi] = useState(ATTENTE ? ATTENTE.email : "");
+  const [lienEnvoye, setLienEnvoye] = useState(!!ATTENTE);
   const [erreurConnexion, setErreurConnexion] = useState("");
   const [codeSaisi, setCodeSaisi] = useState("");
   const [verification, setVerification] = useState(false);
@@ -237,6 +265,8 @@ export default function App() {
   const [nbChats, setNbChats] = useState(SAUV.nbChats ?? 0);
   const [nbLapins, setNbLapins] = useState(SAUV.nbLapins ?? 0);
   const [nbTortues, setNbTortues] = useState(SAUV.nbTortues ?? 0);
+  const [nbJoursPdej, setNbJoursPdej] = useState(SAUV.nbJoursPdej ?? 0);
+  const [nbJoursGouter, setNbJoursGouter] = useState(SAUV.nbJoursGouter ?? 0);
   const [cochesMaison, setCochesMaison] = useState({});
 
   const portionsSoir = adultes + petits * 0.3 + moyens * 0.6 + ados * 1.1;
@@ -268,7 +298,7 @@ export default function App() {
 
   const reponsesActuelles = () => ({ adultes, petits, moyens, ados, nbMidis, nbSoirs, aMidi, pMidi, mMidi, adMidi,
     budget, regime, sansPoisson, magasins, magActif, maisonEntretien, maisonHygiene,
-    nbChiens, nbChats, nbLapins, nbTortues });
+    nbChiens, nbChats, nbLapins, nbTortues, nbJoursPdej, nbJoursGouter });
 
   // Réponses du quiz mémorisées sur l'appareil (pré-remplissage)
   useEffect(() => {
@@ -278,7 +308,10 @@ export default function App() {
   // Session : vérifier au démarrage, puis suivre connexions/déconnexions
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: abo } = supabase.auth.onAuthStateChange((_evt, s) => setSession(s));
+    const { data: abo } = supabase.auth.onAuthStateChange((_evt, s) => {
+      setSession(s);
+      if (s) { try { localStorage.removeItem(CLE_ATTENTE); } catch { /* rien */ } }
+    });
     return () => abo.subscription.unsubscribe();
   }, []);
 
@@ -291,6 +324,7 @@ export default function App() {
     setMagasins(r.magasins ?? ["leclerc"]); setMagActif(r.magActif ?? (r.magasins || ["leclerc"])[0]);
     setMaisonEntretien(r.maisonEntretien ?? false); setMaisonHygiene(r.maisonHygiene ?? false);
     setNbChiens(r.nbChiens ?? 0); setNbChats(r.nbChats ?? 0); setNbLapins(r.nbLapins ?? 0); setNbTortues(r.nbTortues ?? 0);
+    setNbJoursPdej(r.nbJoursPdej ?? 0); setNbJoursGouter(r.nbJoursGouter ?? 0);
   };
 
   // Charger la semaine consultée depuis la base
@@ -348,7 +382,10 @@ export default function App() {
       options: { emailRedirectTo: window.location.origin + import.meta.env.BASE_URL },
     });
     if (error) setErreurConnexion("Envoi impossible : " + error.message);
-    else setLienEnvoye(true);
+    else {
+      setLienEnvoye(true);
+      try { localStorage.setItem(CLE_ATTENTE, JSON.stringify({ email, t: Date.now() })); } catch { /* sans gravité */ }
+    }
   };
 
   // Connexion par le code à 6 chiffres reçu par email (fonctionne aussi dans l'icône iPhone)
@@ -360,6 +397,7 @@ export default function App() {
     const { error } = await supabase.auth.verifyOtp({ email: emailSaisi.trim(), token: code, type: "email" });
     setVerification(false);
     if (error) setErreurConnexion("Code refusé : " + error.message + " — vérifiez les chiffres, ou redemandez un code.");
+    else { try { localStorage.removeItem(CLE_ATTENTE); } catch { /* rien */ } }
   };
 
   // Mode cuisine : garder l'écran allumé (si le navigateur le permet)
@@ -406,7 +444,17 @@ export default function App() {
   const ouvrirRecette = (i) => { setDetail(i); setEcran("recette"); };
   const lancerCuisine = () => { setEtapeCuisine(0); setEcran("cuisine"); };
 
-  const groupes = useMemo(() => listeCourses(menu, slots, mag), [menu, slots, mag]);
+  // Panier petit-déj / goûter de la semaine, ajusté aux âges et aux jours à la maison
+  const consoItems = useMemo(() => {
+    const jours = { pd: nbJoursPdej, gout: nbJoursGouter };
+    return CONSO_HEBDO.map((c) => ({
+      id: c.id,
+      qte: (c.A * adultes + c.T * ados + c.M * moyens + c.P * petits) * (jours[c.cat] / 7),
+    })).filter((x) => x.qte > 0.001);
+  }, [adultes, ados, moyens, petits, nbJoursPdej, nbJoursGouter]);
+  const coutConso = consoItems.reduce((sm, x) => sm + x.qte * prixIngredient(x.id, mag), 0);
+
+  const groupes = useMemo(() => listeCourses(menu, slots, mag, consoItems), [menu, slots, mag, consoItems]);
 
   // Caddie maison : produits concernés, prix du paquet, coût hebdo lissé selon le foyer
   const produitsActifs = useMemo(() => {
@@ -504,6 +552,18 @@ export default function App() {
       ),
     },
     {
+      titre: "Petits déjeuners et goûters ?",
+      corps: (
+        <div className="rangs">
+          <div className="rang"><span>Petits déjeuners à la maison<br /><em className="rangDetail">jours par semaine</em></span><Stepper value={nbJoursPdej} onChange={setNbJoursPdej} min={0} max={7} /></div>
+          {(petits + moyens + ados) > 0 && (
+            <div className="rang"><span>Goûters des enfants<br /><em className="rangDetail">jours par semaine</em></span><Stepper value={nbJoursGouter} onChange={setNbJoursGouter} min={0} max={7} /></div>
+          )}
+          <p className="note">Un panier type rejoint la liste de courses, ajusté à l'âge de chacun : pain, beurre, confiture, céréales, lait, yaourts, fruits — et biscuits, compotes, chocolat pour le goûter. Laissez à 0 si vous gérez ces courses à part.</p>
+        </div>
+      ),
+    },
+    {
       titre: "Et le reste du caddie ?",
       corps: (
         <div className="rangs">
@@ -568,7 +628,7 @@ export default function App() {
               <div className="actions">
                 <button className="prim" disabled={verification} onClick={validerCode}>{verification ? "Vérification…" : "Valider le code"}</button>
               </div>
-              <button className="lien" onClick={() => { setLienEnvoye(false); setCodeSaisi(""); setErreurConnexion(""); }}>Modifier l'adresse ou redemander un code</button>
+              <button className="lien" onClick={() => { setLienEnvoye(false); setCodeSaisi(""); setErreurConnexion(""); try { localStorage.removeItem(CLE_ATTENTE); } catch { /* rien */ } }}>Modifier l'adresse ou redemander un code</button>
             </div>
           )}
         </main>
@@ -646,8 +706,12 @@ export default function App() {
               <span>🍗 {menu.filter((r) => r.famille === "volaille").length} volaille</span>
               <span>🥩 {menu.filter((r) => r.famille === "bœuf" || r.famille === "porc").length} viande rouge</span>
             </div>
-            {coutMaisonHebdo > 0 && (
-              <p className="maisonLigne">🧺 + maison & animaux ≈ {eur(coutMaisonHebdo)}/sem → caddie complet ≈ {eur(total + coutMaisonHebdo)}</p>
+            {(coutMaisonHebdo > 0 || coutConso > 0) && (
+              <p className="maisonLigne">
+                {coutConso > 0 && <>🥐 + petits déj & goûters ≈ {eur(coutConso)}/sem<br /></>}
+                {coutMaisonHebdo > 0 && <>🧺 + maison & animaux ≈ {eur(coutMaisonHebdo)}/sem<br /></>}
+                Caddie complet ≈ {eur(total + coutConso + coutMaisonHebdo)}
+              </p>
             )}
             <p className="note">Touchez un plat pour voir sa recette, ou son ♥ pour le reconduire la semaine prochaine.</p>
           </section>
@@ -807,6 +871,11 @@ export default function App() {
             <div className="ticketSous">
               <span>dont utilisé pour ces {menu.length} repas</span><span>{eur(total)}</span>
             </div>
+            {coutConso > 0 && (
+              <div className="ticketSous">
+                <span>dont petits déj & goûters</span><span>≈ {eur(coutConso)}/sem</span>
+              </div>
+            )}
             {coutMaisonHebdo > 0 && (
               <div className="ticketSous">
                 <span>maison & animaux, coût lissé</span><span>≈ {eur(coutMaisonHebdo)}/sem</span>
@@ -915,6 +984,7 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .moment.midi{background:var(--tag);color:var(--ink)}
 .moment.soir{background:var(--vertF);color:#fff}
 .sousTitre{font-weight:800;font-size:14px;margin-top:8px}
+.rangDetail{font-style:normal;font-weight:400;font-size:11px;color:#6B7365}
 .cat{font-size:11px;color:#6B7365;border:1px solid var(--ligne);border-radius:999px;padding:2px 8px}
 .jourPied{display:flex;justify-content:space-between;align-items:center}
 .ouvrir{display:block;width:100%;text-align:left;background:none;border:none;padding:0;cursor:pointer;font-family:inherit;color:inherit}

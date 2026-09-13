@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": 1,
-    "description": "Base ingrédients Au Menu. prixBase en €/unité (kg, L ou pièce). Nutrition pour 100 g / 100 ml, ou par pièce si unite = pc (valeurs approchées d'après table Ciqual ANSES, à affiner).",
+    "description": "Base ingrédients Au Menu. prixBase en €/unité (kg, L ou pièce), calibrés sur les prix de détail GMS (source RNM FranceAgriMer + relevés, août 2026). Nutrition pour 100 g / 100 ml, ou par pièce si unite = pc (table Ciqual ANSES, approchée). prixEnseignes : prix réellement relevés, qui priment sur prixBase × coefficient.",
     "rayons": [
       "Fruits & légumes",
       "Boucherie & poisson",
@@ -311,7 +311,7 @@
       "nom": "Poivrons",
       "unite": "kg",
       "rayon": "Fruits & légumes",
-      "prixBase": 3.5,
+      "prixBase": 4.0,
       "nutrition": {
         "kcal": 25,
         "prot": 1,
@@ -325,7 +325,7 @@
       "nom": "Brocoli",
       "unite": "kg",
       "rayon": "Fruits & légumes",
-      "prixBase": 3.0,
+      "prixBase": 3.5,
       "nutrition": {
         "kcal": 30,
         "prot": 2.5,
@@ -367,7 +367,7 @@
       "nom": "Haricots verts",
       "unite": "kg",
       "rayon": "Fruits & légumes",
-      "prixBase": 3.2,
+      "prixBase": 4.0,
       "nutrition": {
         "kcal": 30,
         "prot": 1.8,
@@ -437,7 +437,7 @@
       "nom": "Bœuf haché",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 11.0,
+      "prixBase": 12.5,
       "nutrition": {
         "kcal": 230,
         "prot": 18,
@@ -451,7 +451,7 @@
       "nom": "Steaks hachés",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 12.0,
+      "prixBase": 13.5,
       "nutrition": {
         "kcal": 230,
         "prot": 18,
@@ -469,7 +469,7 @@
       "nom": "Côtes de porc",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 8.0,
+      "prixBase": 9.5,
       "nutrition": {
         "kcal": 220,
         "prot": 20,
@@ -483,7 +483,7 @@
       "nom": "Lardons",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 10.0,
+      "prixBase": 11.0,
       "nutrition": {
         "kcal": 300,
         "prot": 14,
@@ -501,7 +501,7 @@
       "nom": "Jambon blanc",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 12.0,
+      "prixBase": 14.0,
       "nutrition": {
         "kcal": 115,
         "prot": 20,
@@ -519,7 +519,7 @@
       "nom": "Saucisses fumées",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 9.0,
+      "prixBase": 11.0,
       "nutrition": {
         "kcal": 300,
         "prot": 13,
@@ -537,7 +537,7 @@
       "nom": "Cuisses de poulet",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 6.0,
+      "prixBase": 6.5,
       "nutrition": {
         "kcal": 180,
         "prot": 18,
@@ -551,7 +551,7 @@
       "nom": "Filet de poulet",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 11.0,
+      "prixBase": 13.0,
       "nutrition": {
         "kcal": 110,
         "prot": 23,
@@ -565,7 +565,7 @@
       "nom": "Pavé de saumon",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 18.0,
+      "prixBase": 26.0,
       "nutrition": {
         "kcal": 200,
         "prot": 20,
@@ -579,7 +579,7 @@
       "nom": "Dos de cabillaud",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 16.0,
+      "prixBase": 29.0,
       "nutrition": {
         "kcal": 80,
         "prot": 18,
@@ -593,7 +593,7 @@
       "nom": "Thon en conserve",
       "unite": "kg",
       "rayon": "Épicerie",
-      "prixBase": 12.0,
+      "prixBase": 13.0,
       "nutrition": {
         "kcal": 130,
         "prot": 26,
@@ -611,7 +611,7 @@
       "nom": "Crevettes",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 16.0,
+      "prixBase": 20.0,
       "nutrition": {
         "kcal": 90,
         "prot": 19,
@@ -625,7 +625,7 @@
       "nom": "Œufs",
       "unite": "pc",
       "rayon": "Crèmerie",
-      "prixBase": 0.35,
+      "prixBase": 0.4,
       "nutrition": {
         "kcal": 78,
         "prot": 6.5,
@@ -679,7 +679,7 @@
       "nom": "Crème fraîche",
       "unite": "L",
       "rayon": "Crèmerie",
-      "prixBase": 4.0,
+      "prixBase": 4.5,
       "nutrition": {
         "kcal": 290,
         "prot": 2.3,
@@ -697,7 +697,7 @@
       "nom": "Beurre",
       "unite": "kg",
       "rayon": "Crèmerie",
-      "prixBase": 10.0,
+      "prixBase": 11.0,
       "nutrition": {
         "kcal": 745,
         "prot": 0.7,
@@ -715,7 +715,7 @@
       "nom": "Emmental râpé",
       "unite": "kg",
       "rayon": "Crèmerie",
-      "prixBase": 9.0,
+      "prixBase": 10.0,
       "nutrition": {
         "kcal": 380,
         "prot": 28,
@@ -733,7 +733,7 @@
       "nom": "Parmesan",
       "unite": "kg",
       "rayon": "Crèmerie",
-      "prixBase": 18.0,
+      "prixBase": 22.0,
       "nutrition": {
         "kcal": 400,
         "prot": 36,
@@ -751,7 +751,7 @@
       "nom": "Chèvre",
       "unite": "kg",
       "rayon": "Crèmerie",
-      "prixBase": 12.0,
+      "prixBase": 14.0,
       "nutrition": {
         "kcal": 290,
         "prot": 20,
@@ -769,7 +769,7 @@
       "nom": "Pâte brisée",
       "unite": "pc",
       "rayon": "Crèmerie",
-      "prixBase": 1.6,
+      "prixBase": 1.8,
       "nutrition": {
         "kcal": 900,
         "prot": 14,
@@ -787,7 +787,7 @@
       "nom": "Pâte feuilletée",
       "unite": "pc",
       "rayon": "Crèmerie",
-      "prixBase": 1.7,
+      "prixBase": 1.9,
       "nutrition": {
         "kcal": 990,
         "prot": 13,
@@ -877,7 +877,7 @@
       "nom": "Merguez",
       "unite": "kg",
       "rayon": "Boucherie & poisson",
-      "prixBase": 9.5,
+      "prixBase": 12.0,
       "nutrition": {
         "kcal": 280,
         "prot": 15,
@@ -913,7 +913,7 @@
       "nom": "Sardines en conserve",
       "unite": "kg",
       "rayon": "Épicerie",
-      "prixBase": 9.0,
+      "prixBase": 10.0,
       "nutrition": {
         "kcal": 210,
         "prot": 24,
@@ -1027,7 +1027,7 @@
       "nom": "Pâte à pizza",
       "unite": "pc",
       "rayon": "Crèmerie",
-      "prixBase": 1.8,
+      "prixBase": 2.0,
       "nutrition": {
         "kcal": 750,
         "prot": 20,
@@ -1057,50 +1057,179 @@
         "qte": 6,
         "libelle": "paquet de 6"
       }
+    },
+    {
+      "id": "baguette",
+      "nom": "Baguette",
+      "unite": "pc",
+      "rayon": "Boulangerie",
+      "prixBase": 1.15,
+      "nutrition": {
+        "kcal": 650,
+        "prot": 22,
+        "lip": 3,
+        "gluc": 130,
+        "fib": 6
+      }
+    },
+    {
+      "id": "cereales",
+      "nom": "Céréales petit-déj",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 4.5,
+      "nutrition": {
+        "kcal": 380,
+        "prot": 8,
+        "lip": 4,
+        "gluc": 78,
+        "fib": 6
+      },
+      "conditionnement": {
+        "qte": 0.5,
+        "libelle": "paquet 500 g"
+      }
+    },
+    {
+      "id": "confiture",
+      "nom": "Confiture",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 3.8,
+      "nutrition": {
+        "kcal": 250,
+        "prot": 0.5,
+        "lip": 0.1,
+        "gluc": 60,
+        "fib": 1
+      },
+      "conditionnement": {
+        "qte": 0.37,
+        "libelle": "pot 370 g"
+      }
+    },
+    {
+      "id": "chocolat-poudre",
+      "nom": "Chocolat en poudre",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 5.5,
+      "nutrition": {
+        "kcal": 380,
+        "prot": 5,
+        "lip": 3,
+        "gluc": 80,
+        "fib": 6
+      },
+      "conditionnement": {
+        "qte": 0.45,
+        "libelle": "boîte 450 g"
+      }
+    },
+    {
+      "id": "jus-orange",
+      "nom": "Jus d'orange",
+      "unite": "L",
+      "rayon": "Épicerie",
+      "prixBase": 1.9,
+      "nutrition": {
+        "kcal": 45,
+        "prot": 0.7,
+        "lip": 0.1,
+        "gluc": 10,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 1,
+        "libelle": "brique 1 L"
+      }
+    },
+    {
+      "id": "yaourts",
+      "nom": "Yaourts nature",
+      "unite": "pc",
+      "rayon": "Crèmerie",
+      "prixBase": 0.28,
+      "nutrition": {
+        "kcal": 60,
+        "prot": 4,
+        "lip": 3,
+        "gluc": 5,
+        "fib": 0
+      },
+      "conditionnement": {
+        "qte": 8,
+        "libelle": "pack de 8"
+      }
+    },
+    {
+      "id": "compotes-gourde",
+      "nom": "Compotes en gourde",
+      "unite": "pc",
+      "rayon": "Épicerie",
+      "prixBase": 0.45,
+      "nutrition": {
+        "kcal": 60,
+        "prot": 0.3,
+        "lip": 0.1,
+        "gluc": 13,
+        "fib": 1
+      },
+      "conditionnement": {
+        "qte": 4,
+        "libelle": "lot de 4"
+      }
+    },
+    {
+      "id": "biscuits-gouter",
+      "nom": "Biscuits goûter",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 6.0,
+      "nutrition": {
+        "kcal": 460,
+        "prot": 6,
+        "lip": 16,
+        "gluc": 72,
+        "fib": 3
+      },
+      "conditionnement": {
+        "qte": 0.3,
+        "libelle": "paquet 300 g"
+      }
+    },
+    {
+      "id": "chocolat-tablette",
+      "nom": "Chocolat en tablette",
+      "unite": "kg",
+      "rayon": "Épicerie",
+      "prixBase": 8.5,
+      "nutrition": {
+        "kcal": 530,
+        "prot": 7,
+        "lip": 30,
+        "gluc": 57,
+        "fib": 7
+      },
+      "conditionnement": {
+        "qte": 0.2,
+        "libelle": "lot de 2 tablettes"
+      }
+    },
+    {
+      "id": "bananes",
+      "nom": "Bananes",
+      "unite": "kg",
+      "rayon": "Fruits & légumes",
+      "prixBase": 1.9,
+      "nutrition": {
+        "kcal": 90,
+        "prot": 1,
+        "lip": 0.3,
+        "gluc": 20,
+        "fib": 2.6
+      }
     }
   ],
-  "prixEnseignes": [
-    {
-      "ingredientId": "boeuf-hache",
-      "enseigne": "lidl",
-      "prix": 9.5,
-      "source": "relevé manuel",
-      "date": "2026-08"
-    },
-    {
-      "ingredientId": "boeuf-hache",
-      "enseigne": "monoprix",
-      "prix": 13.9,
-      "source": "relevé manuel",
-      "date": "2026-08"
-    },
-    {
-      "ingredientId": "pave-saumon",
-      "enseigne": "leclerc",
-      "prix": 15.9,
-      "source": "relevé manuel",
-      "date": "2026-08"
-    },
-    {
-      "ingredientId": "filet-poulet",
-      "enseigne": "lidl",
-      "prix": 8.9,
-      "source": "relevé manuel",
-      "date": "2026-08"
-    },
-    {
-      "ingredientId": "oeufs",
-      "enseigne": "lidl",
-      "prix": 0.28,
-      "source": "relevé manuel",
-      "date": "2026-08"
-    },
-    {
-      "ingredientId": "spaghetti",
-      "enseigne": "carrefour",
-      "prix": 1.55,
-      "source": "relevé manuel",
-      "date": "2026-08"
-    }
-  ]
+  "prixEnseignes": []
 }
