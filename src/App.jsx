@@ -257,7 +257,8 @@ export default function App() {
   const [magActif, setMagActif] = useState(SAUV.magActif ?? "leclerc");
   const [coches, setCoches] = useState({});
   const [gardeIds, setGardeIds] = useState([]);
-  const [detail, setDetail] = useState(null);       // index du repas ouvert
+  const [detail, setDetail] = useState(null);
+  const [planAvant, setPlanAvant] = useState(null); // photo plat-par-créneau à l'entrée du quiz       // index du repas ouvert
   const [etapeCuisine, setEtapeCuisine] = useState(0);
   const [maisonEntretien, setMaisonEntretien] = useState(SAUV.maisonEntretien ?? false);
   const [maisonHygiene, setMaisonHygiene] = useState(SAUV.maisonHygiene ?? false);
@@ -442,6 +443,25 @@ export default function App() {
   };
 
   const ouvrirRecette = (i) => { setDetail(i); setEcran("recette"); };
+
+  const ouvrirQuiz = () => {
+    setPlanAvant(menu.length ? slots.map((sl, i) => ({ cle: sl.jour + "|" + sl.type, plat: menu[i] })) : null);
+    setEcran("quiz"); setEtape(0);
+  };
+
+  // Appliquer les réglages sans regénérer : chaque créneau conservé garde son plat,
+  // les créneaux supprimés disparaissent seuls, les nouveaux sont complétés
+  const appliquerReglages = () => {
+    if (planAvant && planAvant.length) {
+      const parCle = Object.fromEntries(planAvant.map((e) => [e.cle, e.plat]));
+      const conserves = slots.map((sl) => parCle[sl.jour + "|" + sl.type] || null);
+      const dejaIds = conserves.filter(Boolean).map((r) => r.id);
+      const dispo = shuffle(eligibles.filter((r) => !dejaIds.includes(r.id)));
+      const complet = conserves.map((r) => r || dispo.pop() || shuffle(eligibles)[0]).filter(Boolean);
+      setMenu(complet.length === slots.length ? complet : []);
+    }
+    setEcran("menu");
+  };
   const lancerCuisine = () => { setEtapeCuisine(0); setEcran("cuisine"); };
 
   // Panier petit-déj / goûter de la semaine, ajusté aux âges et aux jours à la maison
@@ -643,7 +663,7 @@ export default function App() {
         <div className="logo">AU MENU<span>.</span></div>
         <span className="enteteDroite">
           {ecran !== "quiz" && (
-            <button className="lien" onClick={() => { setEcran("quiz"); setEtape(0); }}>Modifier mes réponses</button>
+            <button className="lien" onClick={ouvrirQuiz}>Modifier mes réponses</button>
           )}
           <button className="lien discret" onClick={() => supabase.auth.signOut()}>Déconnexion</button>
         </span>
@@ -659,7 +679,10 @@ export default function App() {
           <div className="actions">
             {etape > 0 && <button className="second" onClick={() => setEtape(etape - 1)}>Retour</button>}
             {!derniere && <button className="prim" onClick={() => setEtape(etape + 1)}>Continuer</button>}
-            {derniere && <button className="prim" disabled={nbRepas === 0} onClick={generer}>Composer mes menus</button>}
+            {derniere && menu.length > 0 && (
+              <button className="second" onClick={appliquerReglages}>Appliquer sans changer les repas</button>
+            )}
+            {derniere && <button className="prim" disabled={nbRepas === 0} onClick={generer}>{menu.length > 0 ? "Recomposer les repas" : "Composer mes menus"}</button>}
           </div>
           <button className="lien reinit" onClick={() => { try { localStorage.removeItem(CLE_SAUVEGARDE); } catch { /* rien à effacer */ } window.location.reload(); }}>
             Repartir de zéro (efface la sauvegarde de cet appareil)
@@ -685,12 +708,22 @@ export default function App() {
               <h2>Rien de prévu cette semaine</h2>
               <p className="note">Composez ses menus : ils seront enregistrés à cette date, sur votre compte, et retrouvables depuis n'importe quel appareil.</p>
               <div className="actions">
-                <button className="prim" onClick={() => { setEcran("quiz"); setEtape(0); }}>Composer cette semaine</button>
+                <button className="prim" onClick={ouvrirQuiz}>Composer cette semaine</button>
               </div>
             </section>
           )}
 
-          {!chargementSemaine && menu.length > 0 && (<>
+          {!chargementSemaine && menu.length > 0 && menu.length !== slots.length && (
+            <section className="carte vide">
+              <h2>Le nombre de repas a changé</h2>
+              <p className="note">Les réglages ne correspondent plus aux plats enregistrés — recomposez la semaine pour les accorder.</p>
+              <div className="actions">
+                <button className="prim" onClick={generer}>Recomposer la semaine</button>
+              </div>
+            </section>
+          )}
+
+          {!chargementSemaine && menu.length > 0 && menu.length === slots.length && (<>
           <section className="carte bilan">
             <div className="bilanTxt">
               <h1>Vos {menu.length} repas chez {mag.nom}</h1>
