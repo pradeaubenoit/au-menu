@@ -414,7 +414,7 @@ export default function App() {
     if (!slots.length) return;
     const moinsCher = [...magSel].sort((a, b) => a.coef - b.coef)[0];
     setMagActif(moinsCher.id);
-    setMenu(composerMenu(eligibles, slots, budget, moinsCher));
+    setMenu(composerMenu(eligibles, slots, enveloppeRepas, moinsCher));
     setGardeIds([]);
     setCoches({});
     setEcran("menu");
@@ -428,7 +428,7 @@ export default function App() {
     const gardes = toutChanger ? [] : menu.filter((r, i, a) => gardeIds.includes(r.id) && a.findIndex((x) => x.id === r.id) === i);
     const eviter = menu.map((r) => r.id).filter((id) => toutChanger || !gardeIds.includes(id));
     setMagActif(moinsCher.id);
-    setMenu(composerMenu(eligibles, slots, budget, moinsCher, { gardes, eviter }));
+    setMenu(composerMenu(eligibles, slots, enveloppeRepas, moinsCher, { gardes, eviter }));
     if (toutChanger) setGardeIds([]);
     setCoches({});
   };
@@ -496,6 +496,43 @@ export default function App() {
   const totalNourriture = groupes.reduce((s, g) => s + g.items.reduce((x, i) => x + i.prix, 0), 0);
   const totalPanier = totalNourriture + produitsActifs.filter((p) => cochesMaison[p.id]).reduce((s, p) => s + p.prixPaquet, 0);
 
+  // Le budget saisi est celui du CADDIE : repas + petits déj/goûters + maison
+  const caddieTotal = total + coutConso + coutMaisonHebdo;
+  const enveloppeRepas = Math.max(15, budget - coutConso - coutMaisonHebdo);
+  const caddieChez = (m) => totalChez(m)
+    + consoItems.reduce((s2, x) => s2 + x.qte * prixIngredient(x.id, m), 0)
+    + produitsActifs.reduce((s2, p) => s2 + (p.prix * m.coef / p.duree) * p.mult, 0);
+  const meilleureEnseigne = magSel.length > 1
+    ? [...magSel].sort((m1, m2) => caddieChez(m1) - caddieChez(m2))[0] : null;
+  const minParPortion = eligibles.length ? Math.min(...eligibles.map((r) => coutParPersonne(r, mag))) : 0;
+  const caddieMinimum = slots.reduce((s2, sl) => s2 + minParPortion * sl.portions, 0) + coutConso + coutMaisonHebdo;
+
+  // Remplacer les plats les plus chers par des économiques (♥ conservés, équilibre respecté)
+  const optimiser = () => {
+    const copie = [...menu];
+    const cout = (r, i) => coutParPersonne(r, mag) * slots[i].portions;
+    const caddie = () => copie.reduce((s2, r, i) => s2 + cout(r, i), 0) + coutConso + coutMaisonHebdo;
+    let garde = 0;
+    while (caddie() > budget && garde < 80) {
+      garde++;
+      let iCher = -1;
+      copie.forEach((r, i) => {
+        if (gardeIds.includes(r.id)) return;
+        if (iCher < 0 || cout(r, i) > cout(copie[iCher], iCher)) iCher = i;
+      });
+      if (iCher < 0) break;
+      const actuel = copie[iCher];
+      const dispo = eligibles
+        .filter((r) => !copie.some((m) => m.id === r.id)
+          && coutParPersonne(r, mag) < coutParPersonne(actuel, mag)
+          && (r.famille === actuel.famille || r.famille === "végé"))
+        .sort((x, y) => coutParPersonne(x, mag) - coutParPersonne(y, mag));
+      if (!dispo.length) break;
+      copie[iCher] = dispo[0];
+    }
+    setMenu(copie); setCoches({});
+  };
+
   const ETAPES = [
     {
       titre: "Qui vit à la maison ?",
@@ -529,13 +566,20 @@ export default function App() {
       ),
     },
     {
-      titre: "Votre budget repas pour la semaine",
+      titre: "Votre budget caddie pour la semaine",
       corps: (
         <div className="rangs">
           <div className="budgetAff"><span className="tag">{eur(budget)}</span></div>
-          <input type="range" min={25} max={250} step={5} value={budget}
-            onChange={(e) => setBudget(+e.target.value)} aria-label="Budget hebdomadaire" />
-          <p className="note">Soit environ {eur(budget / Math.max(1, nbRepas))} par repas, pour {nbRepas} repas planifiés.</p>
+          <input type="range" min={25} max={300} step={5} value={budget}
+            onChange={(e) => setBudget(+e.target.value)} aria-label="Budget caddie hebdomadaire" />
+          <p className="note">
+            C'est le total du ticket de caisse à ne pas dépasser, tout compris.
+            {(coutConso + coutMaisonHebdo) > 0 ? (
+              <> Petits déj, goûters, maison et animaux ≈ {eur(coutConso + coutMaisonHebdo)}/sem → il reste <strong>{eur(Math.max(0, budget - coutConso - coutMaisonHebdo))}</strong> pour les {nbRepas} repas.</>
+            ) : (
+              <> Soit environ {eur(budget / Math.max(1, nbRepas))} par repas, pour {nbRepas} repas planifiés.</>
+            )}
+          </p>
         </div>
       ),
     },
@@ -605,7 +649,8 @@ export default function App() {
     },
   ];
 
-  const derniere = etape === ETAPES.length - 1;
+  const ETAPES_ORDRE = [ETAPES[0], ETAPES[1], ETAPES[5], ETAPES[6], ETAPES[2], ETAPES[3], ETAPES[4]];
+  const derniere = etape === ETAPES_ORDRE.length - 1;
   const rDetail = detail !== null ? menu[detail] : null;
   const sDetail = detail !== null ? slots[detail] : null;
 
@@ -672,10 +717,10 @@ export default function App() {
       {ecran === "quiz" && (
         <main className="carte quiz">
           <div className="points" role="progressbar" aria-valuenow={etape + 1} aria-valuemax={ETAPES.length}>
-            {ETAPES.map((_, i) => <i key={i} className={i <= etape ? "on" : ""} />)}
+            {ETAPES_ORDRE.map((_, i) => <i key={i} className={i <= etape ? "on" : ""} />)}
           </div>
-          <h1>{ETAPES[etape].titre}</h1>
-          {ETAPES[etape].corps}
+          <h1>{ETAPES_ORDRE[etape].titre}</h1>
+          {ETAPES_ORDRE[etape].corps}
           <div className="actions">
             {etape > 0 && <button className="second" onClick={() => setEtape(etape - 1)}>Retour</button>}
             {!derniere && <button className="prim" onClick={() => setEtape(etape + 1)}>Continuer</button>}
@@ -727,24 +772,38 @@ export default function App() {
           <section className="carte bilan">
             <div className="bilanTxt">
               <h1>Vos {menu.length} repas chez {mag.nom}</h1>
-              <p className={total > budget ? "depasse" : "ok"}>
-                {eur(total)} <span>/ budget {eur(budget)}</span>
-                {total > budget ? " — léger dépassement" : " — dans le budget ✓"}
+              <p className={caddieTotal > budget ? "depasse" : "ok"}>
+                Caddie {eur(caddieTotal)} <span>/ budget {eur(budget)}</span>
+                {caddieTotal > budget ? " — dépassement" : " — dans le budget ✓"}
               </p>
             </div>
-            <div className="jauge"><i style={{ width: Math.min(100, (total / budget) * 100) + "%" }} className={total > budget ? "rouge" : ""} /></div>
+            <div className="jauge"><i style={{ width: Math.min(100, (caddieTotal / budget) * 100) + "%" }} className={caddieTotal > budget ? "rouge" : ""} /></div>
             <div className="equilibre">
               <span>🥦 {menu.filter((r) => r.famille === "végé").length} végé</span>
               <span>🐟 {menu.filter((r) => r.famille === "poisson").length} poisson</span>
               <span>🍗 {menu.filter((r) => r.famille === "volaille").length} volaille</span>
               <span>🥩 {menu.filter((r) => r.famille === "bœuf" || r.famille === "porc").length} viande rouge</span>
             </div>
-            {(coutMaisonHebdo > 0 || coutConso > 0) && (
-              <p className="maisonLigne">
-                {coutConso > 0 && <>🥐 + petits déj & goûters ≈ {eur(coutConso)}/sem<br /></>}
-                {coutMaisonHebdo > 0 && <>🧺 + maison & animaux ≈ {eur(coutMaisonHebdo)}/sem<br /></>}
-                Caddie complet ≈ {eur(total + coutConso + coutMaisonHebdo)}
-              </p>
+            <p className="maisonLigne">
+              🍽 repas : {eur(total)}
+              {coutConso > 0 && <><br />🥐 petits déj & goûters ≈ {eur(coutConso)}/sem</>}
+              {coutMaisonHebdo > 0 && <><br />🧺 maison & animaux ≈ {eur(coutMaisonHebdo)}/sem</>}
+            </p>
+            {caddieTotal > budget && (
+              <div className="conseils">
+                <p className="conseilsTitre">Pour tenir le budget :</p>
+                {meilleureEnseigne && meilleureEnseigne.id !== magActif && caddieChez(meilleureEnseigne) < caddieTotal - 0.5 && (
+                  <button className="lien conseil" onClick={() => setMagActif(meilleureEnseigne.id)}>
+                    → Basculer chez {meilleureEnseigne.nom} : {eur(caddieChez(meilleureEnseigne))} (économie {eur(caddieTotal - caddieChez(meilleureEnseigne))})
+                  </button>
+                )}
+                <button className="lien conseil" onClick={optimiser}>
+                  → Remplacer les plats les plus chers par des plats économiques (vos ♥ sont conservés)
+                </button>
+                {budget < caddieMinimum && (
+                  <p className="note">Même au plus économique, cette semaine revient à ≈ {eur(caddieMinimum)} pour votre foyer. Pistes : moins de repas planifiés (les restes comptent !), ou ajuster le budget dans « Modifier mes réponses ».</p>
+                )}
+              </div>
             )}
             <p className="note">Touchez un plat pour voir sa recette, ou son ♥ pour le reconduire la semaine prochaine.</p>
           </section>
@@ -1051,6 +1110,9 @@ input[type=range]{width:100%;accent-color:var(--vert);height:32px}
 .qte{color:#6B7365;min-width:88px;flex:none}
 .besoin{font-style:normal;font-size:11px;color:#9AA294}
 .maisonLigne{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;margin-top:10px}
+.conseils{margin-top:12px;padding:12px 14px;border:1.5px dashed var(--rouge);border-radius:12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.conseilsTitre{font-weight:800;font-size:13px;color:var(--rouge)}
+.conseil{text-align:left;padding:2px 0}
 .estompe .qte,.estompe .nomI,.estompe .prixI{opacity:.5}
 .ticketSous{display:flex;justify-content:space-between;font-size:12px;color:#6B7365;margin-top:4px}
 .nomI{flex:1}
